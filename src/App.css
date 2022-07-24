@@ -6,6 +6,26 @@
   text-decoration: none;
   color: rgb(45, 45, 45);
  }
+
+ button {
+  color: rgba(0, 0, 0, 0.7);
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border: none;
+  font-size: 45px;
+  height: 50px;
+  width: 50px;
+  margin: 0 auto;
+}
+
+button:hover {
+  background-color: rgba(124, 124, 124, 0.493);
+  transition: 0.35s;
+}
+
 .home{
   margin: auto;
   width: 75%;
@@ -33,9 +53,19 @@
   transition: 0.4s;
 }
 
+.container-card{
+  width: 80%;
+  height: auto;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 .card--contact{
   margin: auto;
   margin-top: 10px;
+  margin-bottom: 15px;
   width: 35%;
   height: auto;
   border: solid 1px;
@@ -44,4 +74,47 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.container--button{
+  /* border: #000 solid 1px; */
+  width: 20%;
+  height: auto;
+  display: flex;
+  justify-content: space-around;
+}
+
+
+.container--form{
+  width: 60%;
+  height: auto;
+  border: solid 1px #000;
+  margin: 50px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.form--add{
+  width: 80%;
+  height: auto;
+  border: solid 1px #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 5vh;
+}
+
+.form--add input{
+  width: 60%;
+  line-height: 5vh;
+  border-radius: 15px;
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+  font-size: 2vh;
+}
+.form--add input text{
+margin-left: 25px;
 }

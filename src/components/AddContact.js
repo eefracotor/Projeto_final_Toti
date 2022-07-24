@@ -1,8 +1,11 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
+import {useNavigate} from "react-router-dom"
 import Axios from "axios";
+import Button from "./buttoms";
 
 export default function AddContact(){
     const [values, setValues] = useState('');
+    let navigate = useNavigate()
 
     const handleChange = value => {
         // console.log(value.target.value)
@@ -23,12 +26,17 @@ export default function AddContact(){
             console.log(response)
         });
     };
-
+   
     return(
-        <>
-        
+        <div className="container--form">
+         <Button
+                    icon="arrow_back_ios"
+                    onClick={() => {
+                        navigate("/")
+                    }}
+                />
         <h1>AddContact</h1>
-        <form>
+        <form className="form--add">
             {/* <label>Nome</label> */}
             <input
                 type={"text"}
@@ -59,6 +67,6 @@ export default function AddContact(){
             />
             <button onClick={() =>handleClick()}>Salvar</button>
         </form>
-        </>
+        </div>
     )
 }
