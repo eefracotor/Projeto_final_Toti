@@ -1,13 +1,14 @@
 const express = require("express");
 const app = express();
 const sqlite3 = require("sqlite3");
+const { Sequelize, DataTypes, where } = require('sequelize');
 const cors = require("cors");
+const { useParams } = require("react-router-dom");
 
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded());
-
 
 const db = new sqlite3.Database('./BD.db', (err) => {
     if (err) {
@@ -17,19 +18,28 @@ const db = new sqlite3.Database('./BD.db', (err) => {
     }
 });
 
-// const db = sqlite3.createPool({
-//     host: "localhost",
-//     database: "BD.db"
-// });
-
-// Consultanto a lista de contatos 
-app.get("/list", (req,res) => {
+// lista de contatos 
+app.all("/list", (req,res) => {
     let SQL = "SELECT * FROM contato";
-    db.get(SQL, (err, result) => {
+    db.all(SQL, (err, result) => {
         if (err) console.log(err);
         else {
-            console.log(result);
-            res.send(result);
+            const teste =JSON.stringify(result)
+            console.log(teste);
+            res.send(teste);
+        }
+    })
+})
+
+app.get('/contact/:id', (req,res) => {
+    const {id} =req.params;
+    let SQL = 'SELECT * FROM contato WHERE id = ?';
+    db.get(SQL, [id], (err, result) => {
+        if (err) console.log(err);
+        else {
+            const teste =JSON.stringify(result)
+            console.log(teste);
+            res.send(teste);
         }
     })
 })

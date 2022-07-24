@@ -6,37 +6,37 @@ import Contacto from "./contact";
 
 export default function Home() { 
     const [contato, setContact] = useState([]);
-    // const URL = "http://localhost:3001/contactlist";
+    const URL = "http://localhost:3001/list";
     console.log(contato);
     useEffect(() => {
-        // const getData = async () => {
-        //     const response = await Axios.get(URL)
-        //     setContact(response.data)
-        //   }
-        //   getData();
-        Axios.get("http://localhost:3001/list")
+        Axios.get(URL)
         .then((response) => {
             console.log(response);
-            //setContact(response.data);
+            setContact(response.data);
         });
-        // const getData = async () => {
-        //     const response = await Axios.get(URL);
-        //     const contacto = response.data
-        //     console.log("data: "+ {contacto})
-        //     setContact(contacto);
-        //     };
-        //     getData();
     }, []);
     
     return (
-        <div>
+        <div className="home">
             <h1> Lista de Conatos</h1>
             <Link to="/addcontact">
                 <p>AddContact</p>
             </Link>
+            <Link to="/contact/">
+                <p>EditContact</p>
+            </Link>
             <div>
-                {typeof contato !== "undefined" && contato.map((value) => {
-                    return <Contacto></Contacto>;
+                {typeof contato !== "undefined" && contato.map((contact) => {
+                    return (
+                        <Link to={`/contact/${contact.id}`} >
+                            <Contacto
+                                key={contact.id}
+                                name={contact.name}
+                                phone={contact.phone}
+                                email={contact.email}
+                            ></Contacto>
+                        </Link>
+                    )
                 })}
             </div>
         </div>
