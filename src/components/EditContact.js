@@ -4,7 +4,6 @@ import Axios from "axios";
 import { Card } from "./contact";
 import Button from "./buttoms";
 import FormDialog from "./Dialog";
-import { PropaneSharp } from "@mui/icons-material";
 
 
 
@@ -14,7 +13,7 @@ export default function EditContact(){
     let navigate = useNavigate()
     
     const [contato, setContato] = useState([]);
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     console.log(contato);
     useEffect(() => {
         Axios.get(URL)
@@ -27,7 +26,18 @@ export default function EditContact(){
     const handleClickCard = () =>{
         setOpen(true)
     }
-    //  console.log(contato?.nome)  
+
+    const handleDelete = ()=>{
+        let isDelete = window.confirm(
+            `¿Estás seguro de eliminar el registro de '${contato.name}'?`
+        )
+        if(isDelete){
+            Axios.delete(`http://localhost:3001/delete/${id}`)
+            navigate("/")
+        }
+        // handleClose();
+     }
+     console.log(contato)  
     return(
         <div className="container-card">
             <div>
@@ -50,9 +60,10 @@ export default function EditContact(){
                 id_cont_social={contato.id_cont_social}
                 id_contact_group={contato.id_contact_group}
                 id_work={contato.id_work}
-                contato={contato}
-                setContato={setContato}
+                contato={contato.contato}
+                setContato={contato.setContato}
             />
+            
             <Card 
                 key={contato.id}
                 name={contato.name}
@@ -73,6 +84,9 @@ export default function EditContact(){
                     icon="edit"            
                 />
                 <Button 
+                onClick={() => {
+                    handleDelete()
+                }}
                     icon="delete"            
                 />
             </div>

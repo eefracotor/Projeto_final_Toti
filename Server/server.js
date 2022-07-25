@@ -53,10 +53,42 @@ app.post("/addcontact", (req,res) => {
     let SQL ="INSERT INTO contato (name, phone, email, adress, pic, id_cont_social, id_contact_group, id_work) VALUES ( ?,?,?,?,?,?,?,? )";
 
     db.run(SQL,[name,phone,email,adress],(err, result) => {
-        console.log(err);
+        if(err) console.log(err);
+        else console.log(result)
     })
     // console.log(name)
 })
+
+app.put("/edit", (req,res) => {
+    const {id} = req.body
+    const {name} = req.body
+    const {phone} = req.body
+    const {email} = req.body
+    const {adress} = req.body
+    const {pic} = req.body
+    const {id_cont_social} = req.body
+    const {id_contact_group} = req.body
+    const {id_work} = req.body
+    
+    let SQL ="UPDATE contato SET name = ?, phone = ?, email = ?, adress = ?, pic = ?, id_cont_social = ?, id_contact_group = ?, id_work = ? WHERE id = ?";
+
+    db.run(SQL,[name, phone, email, adress, pic, id_cont_social, id_contact_group, id_work, id],(err, result) => {
+        if(err) console.log(err);
+        else console.log(result)
+    })
+})
+
+app.delete("/delete/:id", (req, res) => {
+    const {id} = req.params;
+    let SQL = "DELETE FROM contato WHERE id = ?";
+    db.run(SQL, [id], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+  });
 
 app.listen(3001, () => {
     console.log("Inicializando servidor")

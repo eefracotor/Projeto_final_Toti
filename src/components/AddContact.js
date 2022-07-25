@@ -15,8 +15,6 @@ export default function AddContact(){
         }))
     }
     const handleClick = () => {
-        // e.preventdefault
-        // console.log(values)
         Axios.post("http://localhost:3001/addcontact", {
             name: values.name,
             phone: values.phone,
@@ -25,6 +23,7 @@ export default function AddContact(){
         }).then((response) => {
             console.log(response)
         });
+        navigate("/");
     };
    
     return(
@@ -65,6 +64,34 @@ export default function AddContact(){
                 name="adress"
                 onChange={handleChange}
             />
+             {/* <label>Imagem</label> */}
+             <input
+                type={"text"}
+                placeholder="Imagem"
+                name="pic"
+                onChange={handleChange}
+            />
+             {/* <label>Social Midia</label> */}
+             <input
+                type={"text"}
+                placeholder="Redes social"
+                name="id_cont_social"
+                onChange={handleChange}
+            />
+             {/* <label>Grupo</label> */}
+             <input
+                type={"text"}
+                placeholder="Grupo"
+                name="id_contact_group"
+                onChange={handleChange}
+            /> {/* <label>trabalho</label> */}
+            <input
+                type={"text"}
+                placeholder="Trabalho"
+                name="id_work"
+                onChange={handleChange}
+            />
+
             <button onClick={() =>handleClick()}>Salvar</button>
         </form>
         </div>

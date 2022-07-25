@@ -15,7 +15,9 @@ export default function Home() {
         Axios.get(URL)
         .then((response) => {
             console.log(response);
-            setContact(response.data);
+            const listOrd = response.data;
+            listOrd.sort((a,b) => (a.name > b.name ? 1 : a.name < b.name ? -1 : 0 ))
+            setContact(listOrd);
         });
     }, []);
     
@@ -35,7 +37,7 @@ export default function Home() {
             <Link to="/contact/">
                 <p>EditContact</p>
             </Link> */}
-            <div>
+            <div className="lista--contact">
                 {typeof contato !== "undefined" && contato.map((contact) => {
                     return (
                         <Link to={`/contact/${contact.id}`} >

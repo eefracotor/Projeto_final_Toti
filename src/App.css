@@ -34,10 +34,13 @@ button:hover {
   justify-content: center;
   align-items: center;
 }
+.lista--contact{
+  width: 50%;
+}
 .card--list{
   margin: auto;
   margin-top: 10px;
-  width: 60%;
+  /* width: 60%; */
   height: 20vh;
   border: solid 1px;
   border-radius: 15px;
@@ -64,7 +67,7 @@ button:hover {
 }
 .card--contact{
   margin: auto;
-  margin-top: 10px;
+  margin-top: 100px;
   margin-bottom: 15px;
   width: 35%;
   height: auto;
@@ -117,4 +120,20 @@ button:hover {
 }
 .form--add input text{
 margin-left: 25px;
+}
+.foto--list{
+  width: 75px;
+  height: 75px;
+  border: transparent, solid;
+  border-radius: 50%;
+  background-color: rgb(187, 185, 185);
+}
+
+.foto--card{
+  width: 150px;
+  height: 150px;
+  margin-top: -75px;
+  border: transparent, solid;
+  border-radius: 50%;
+  background-color: rgba(187, 185, 185, 0.795);
 }
