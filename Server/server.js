@@ -59,7 +59,8 @@ app.post("/addcontact", (req,res) => {
     // console.log(name)
 })
 
-app.put("/edit", (req,res) => {
+app.put('/edit/', (req,res) => {
+    // const {id} =req.params;
     const {id} = req.body
     const {name} = req.body
     const {phone} = req.body
@@ -71,11 +72,13 @@ app.put("/edit", (req,res) => {
     const {id_work} = req.body
     
     let SQL ="UPDATE contato SET name = ?, phone = ?, email = ?, adress = ?, pic = ?, id_cont_social = ?, id_contact_group = ?, id_work = ? WHERE id = ?";
-
+    // console.log(req)
     db.run(SQL,[name, phone, email, adress, pic, id_cont_social, id_contact_group, id_work, id],(err, result) => {
         if(err) console.log(err);
         else console.log(result)
     })
+    console.log(id)
+    console.log(req.body)
 })
 
 app.delete("/delete/:id", (req, res) => {

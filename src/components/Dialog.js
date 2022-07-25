@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom"
 import Axios from "axios";
 import Button from '@mui/material/Button';
@@ -9,7 +9,28 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
 export default function FormDialog(props) {
-   let navigate = useNavigate()
+   let navigate = useNavigate();
+   const [fomr, setForm] = useState([]);
+   const [db, setDb] = useState(null);
+   let URL = `http://localhost:3000/contatos/${props.id}` 
+
+   // const [contact, setContac] = useState([]);
+   //  useEffect(() => {
+   //      const getData = async () => {
+   //      const response = await Axios.get(URL);
+   //      const contacto = response.data
+   //      console.log("data: "+ {contacto})
+   //      setContac(contacto);
+   //      };
+   //      getData();
+   //  }, [props.id]);
+//   console.log("db: "+ {contacto);
+
+   const handleClose = () => {
+      props.setOpen(false);
+   };
+
+
    const [editValue, setEditValue]=useState({
       id:props.id,
       name:props.name,
@@ -22,22 +43,16 @@ export default function FormDialog(props) {
       id_work:props.id_work
    });
 
-  
-
-  const handleClose = () => {
-    props.setOpen(false);
-  };
-
-  const hanleChangeValues = (value) => {
+  const handleChangeValues = (value) => {
      setEditValue((prevValue) => ({
         ...prevValue,
-        [value.target.id]: value.target.value,
+        [value.target.name]: value.target.value,
      }));
    };
 
   const handleSaveChange = () => {
-   Axios.put("http://localhost:3001/edit", {
-      id:editValue.id,
+   Axios.put(`http://localhost:3001/edit`, {
+      id:props.id,
       name: editValue.name,
       phone: editValue.phone,
       email: editValue.email,
@@ -49,7 +64,7 @@ export default function FormDialog(props) {
    }).then(() => {
       props.setContato(
          props.contato.map((value) => {
-           return value.id == editValue.id
+           return value.id == props.id
              ? {
                  id: editValue.id,
                  name: editValue.name,
@@ -117,7 +132,7 @@ const handleDelete = () => {
             id="id"
             label="ID"
             defaultValue={props.id}
-            onChange={hanleChangeValues}
+            onChange={handleChangeValues}
             type="text"
             fullWidth
             variant="standard"
@@ -128,7 +143,7 @@ const handleDelete = () => {
             id="name"
             label="Nome"
             defaultValue={props.name}
-            onChange={hanleChangeValues}
+            onChange={handleChangeValues}
             type="text"
             fullWidth
             variant="standard"
@@ -139,7 +154,7 @@ const handleDelete = () => {
             id="phone"
             label="Telefone"
             defaultValue={props.phone}
-            onChange={hanleChangeValues}
+            onChange={handleChangeValues}
             type="text"
             fullWidth
             variant="standard"
@@ -150,7 +165,7 @@ const handleDelete = () => {
             id="email"
             label="Email"
             defaultValue={props.email}
-            onChange={hanleChangeValues}
+            onChange={handleChangeValues}
             type="email"
             fullWidth
             variant="standard"
@@ -161,7 +176,7 @@ const handleDelete = () => {
             id="adress"
             label="Endereço"
             defaultValue={props.adress}
-            onChange={hanleChangeValues}
+            onChange={handleChangeValues}
             type="text"
             fullWidth
             variant="standard"
@@ -172,7 +187,7 @@ const handleDelete = () => {
             id="pic"
             label="Imagem"
             defaultValue={props.pic}
-            onChange={hanleChangeValues}
+            onChange={handleChangeValues}
             type="text"
             fullWidth
             variant="standard"
@@ -182,7 +197,7 @@ const handleDelete = () => {
             margin="dense"
             id="id_cont_social"
             defaultValue={props.id_cont_social}
-            onChange={hanleChangeValues}
+            onChange={handleChangeValues}
             label="Redes"
             type="text"
             fullWidth
@@ -194,7 +209,7 @@ const handleDelete = () => {
             id="id_contact_group"
             label="Grupo"
             defaultValue={props.id_contact_group}
-            onChange={hanleChangeValues}
+            onChange={handleChangeValues}
             type="text"
             fullWidth
             variant="standard"
@@ -205,7 +220,7 @@ const handleDelete = () => {
             id="id_work"
             label="Trabalho"
             defaultValue={props.id_work}
-            onChange={hanleChangeValues}
+            onChange={handleChangeValues}
             type="text"
             fullWidth
             variant="standard"
@@ -217,7 +232,7 @@ const handleDelete = () => {
             handleDelete()
           }}>Excluir</Button>
           <Button onClick={() => {
-            handleEditGame()
+            handleSaveChange()
           }}>Salvar</Button>
         </DialogActions>
       </Dialog>
