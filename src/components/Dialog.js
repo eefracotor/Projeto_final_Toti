@@ -10,49 +10,44 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 export default function FormDialog(props) {
    let navigate = useNavigate();
-   const [fomr, setForm] = useState([]);
+   const [from, setForm] = useState([]);
    const [db, setDb] = useState(null);
    let URL = `http://localhost:3000/contatos/${props.id}` 
-
-   // const [contact, setContac] = useState([]);
-   //  useEffect(() => {
-   //      const getData = async () => {
-   //      const response = await Axios.get(URL);
-   //      const contacto = response.data
-   //      console.log("data: "+ {contacto})
-   //      setContac(contacto);
-   //      };
-   //      getData();
-   //  }, [props.id]);
-//   console.log("db: "+ {contacto);
 
    const handleClose = () => {
       props.setOpen(false);
    };
 
+      const [editValue, setEditValue] = useState(
+         {
+      id: props.id,
+      name: props.name,
+      phone: props.phone,
+      email: props.email,
+      adress: props.adress,
+      pic: props.pic,
+      id_cont_social: props.id_cont_social,
+      id_contact_group: props.id_contact_group,
+      id_work: props. id_work,
+   }
+   );
 
-   const [editValue, setEditValue]=useState({
-      id:props.id,
-      name:props.name,
-      phone:props.phone,
-      email:props.email,
-      adress:props.adress,
-      pic:props.pic,
-      id_cont_social:props.id_cont_social,
-      id_contact_group:props.id_contact_group,
-      id_work:props.id_work
-   });
+  const handleChangeValues = (values) => {
+   setEditValue({
+      ...editValue,
+      [values.target.id]: values.target.value,
+   })
 
-  const handleChangeValues = (value) => {
-     setEditValue((prevValue) => ({
-        ...prevValue,
-        [value.target.name]: value.target.value,
-     }));
+
+   // setEditValue((prevValue) => ({
+   //      ...prevValue,
+   //      [values.target.id]: values.target.value,
+   //   }));
    };
 
   const handleSaveChange = () => {
    Axios.put(`http://localhost:3001/edit`, {
-      id:props.id,
+      id: props.id,
       name: editValue.name,
       phone: editValue.phone,
       email: editValue.email,
@@ -84,41 +79,8 @@ export default function FormDialog(props) {
    handleClose();
 };
 
-const handleEditGame = () => {
-   Axios.put("http://localhost:3001/edit", {
-      id:editValue.id,
-      name: editValue.name,
-      phone: editValue.phone,
-      email: editValue.email,
-      adress: editValue.adress,
-      pic: editValue.pic,
-      id_cont_social: editValue.id_cont_social,
-      id_contact_group: editValue.id_contact_group,
-      id_work: editValue.id_work,
-   }).then(() => {
-     props.setListCard(
-       props.listCard.map((value) => {
-         return value.id == editValue.id
-           ? {
-            id: editValue.id,
-            name: editValue.name,
-            phone: editValue.phone,
-            email: editValue.email,
-            adress: editValue.adress,
-            pic: editValue.pic,
-            id_cont_social: editValue.id_cont_social,
-            id_contact_group: editValue.id_contact_group,
-            id_work: editValue.id_work
-             }
-           : value;
-       })
-     );
-   });
-   handleClose();
- };
-
 const handleDelete = () => {
-   Axios.delete(`http://localhost:3001/delete/${editValue.id}`)
+   Axios.delete(`http://localhost:3001/delete/${props.id}`)
    handleClose();
 }
   return (
@@ -127,7 +89,7 @@ const handleDelete = () => {
         <DialogTitle>Editar</DialogTitle>
         <DialogContent>
           <TextField
-            autoFocus
+            disabled
             margin="dense"
             id="id"
             label="ID"
