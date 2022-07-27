@@ -60,8 +60,8 @@ export default function EditContact(){
                 id_cont_social={contato.id_cont_social}
                 id_contact_group={contato.id_contact_group}
                 id_work={contato.id_work}
-                contato={contato.contato}
-                setContato={contato.setContato}
+                // contato={contato.contato}
+                // setContato={contato.setContato}
             />
             
             <Card 

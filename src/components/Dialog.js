@@ -10,79 +10,62 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 export default function FormDialog(props) {
    let navigate = useNavigate();
-   const [from, setForm] = useState([]);
-   const [db, setDb] = useState(null);
-   let URL = `http://localhost:3000/contatos/${props.id}` 
+   let URL = `http://localhost:3001/${props.id}` 
 
    const handleClose = () => {
       props.setOpen(false);
    };
 
-      const [editValue, setEditValue] = useState(
-         {
+      const [editValue, setEditValue] = useState({
       id: props.id,
       name: props.name,
       phone: props.phone,
       email: props.email,
       adress: props.adress,
       pic: props.pic,
-      id_cont_social: props.id_cont_social,
+      id_cont_social:props.id_cont_social,
       id_contact_group: props.id_contact_group,
-      id_work: props. id_work,
-   }
-   );
+      id_work:  props.id_work,
+   });
 
   const handleChangeValues = (values) => {
    setEditValue({
-      ...editValue,
+      ...props,
       [values.target.id]: values.target.value,
    })
-
-
-   // setEditValue((prevValue) => ({
-   //      ...prevValue,
-   //      [values.target.id]: values.target.value,
-   //   }));
    };
 
   const handleSaveChange = () => {
-   Axios.put(`http://localhost:3001/edit`, {
-      id: props.id,
-      name: editValue.name,
-      phone: editValue.phone,
-      email: editValue.email,
-      adress: editValue.adress,
-      pic: editValue.pic,
-      id_cont_social: editValue.id_cont_social,
-      id_contact_group: editValue.id_contact_group,
-      id_work: editValue.id_work,
-   }).then(() => {
-      props.setContato(
-         props.contato.map((value) => {
-           return value.id == props.id
-             ? {
-                 id: editValue.id,
-                 name: editValue.name,
-                 phone: editValue.phone,
-                 email: editValue.email,
-                 adress: editValue.adress,
-                 pic: editValue.pic,
-                 id_cont_social: editValue.id_cont_social,
-                 id_contact_group: editValue.id_contact_group,
-                 id_work: editValue.id_work
-               }
-             : value
-         })
-       );
-     });
-   // });
-   handleClose();
+   let isSave = window.confirm(
+      "Desea guardar los cambios realizados?"
+   )
+   
+   if(isSave) {
+      Axios.put(`http://localhost:3001/edit`, {
+         id: props.id,
+         name: editValue.name,
+         phone: editValue.phone,
+         email: editValue.email,
+         adress: editValue.adress,
+         pic: editValue.pic,
+         id_cont_social: editValue.id_cont_social,
+         id_contact_group: editValue.id_contact_group,
+         id_work: editValue.id_work,
+      });
+      navigate("/");
+   }
 };
 
-const handleDelete = () => {
-   Axios.delete(`http://localhost:3001/delete/${props.id}`)
-   handleClose();
+const handleDelete = ()=>{
+   let isDelete = window.confirm(
+       `¿Estás seguro de eliminar el registro de '${props.name}'?`
+   )
+   if(isDelete){
+       Axios.delete(`http://localhost:3001/delete/${props.id}`)
+       navigate("/")
+   }
 }
+
   return (
     <div>
       <Dialog open={props.open} onClose={handleClose}>
