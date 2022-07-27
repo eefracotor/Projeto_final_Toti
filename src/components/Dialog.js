@@ -16,7 +16,7 @@ export default function FormDialog(props) {
       props.setOpen(false);
    };
 
-      const [editValue, setEditValue] = useState({
+   const [editValue, setEditValue] = useState({
       id: props.id,
       name: props.name,
       phone: props.phone,
@@ -42,7 +42,7 @@ export default function FormDialog(props) {
    
    if(isSave) {
       Axios.put(`http://localhost:3001/edit`, {
-         id: props.id,
+         id: editValue.id,
          name: editValue.name,
          phone: editValue.phone,
          email: editValue.email,

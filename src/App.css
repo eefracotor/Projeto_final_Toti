@@ -109,7 +109,11 @@ button:hover {
   flex-direction: column;
   margin-bottom: 5vh;
 }
+.form--search{
+  padding-top: 1px;
+  margin-right: 10px;
 
+}
 .form--add input{
   width: 60%;
   line-height: 5vh;

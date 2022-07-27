@@ -1,9 +1,11 @@
+import App from '../App.css'; 
 import Axios from "axios"
 import React, { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import Button from "./buttoms";
 import Contacto from "./contact";
-
+import SearchContact from "./Search";
+//import SearchIcon from '@mui/icons-material/Search';
 
 export default function Home() { 
     const [contato, setContact] = useState([]);
@@ -23,13 +25,22 @@ export default function Home() {
     
     return (
         <div className="home">
-            <h1> Lista de Conatos</h1>
-            <Button
-                icon="person_add"
-                onClick={() => {
-                    navigate("/addcontact")
-                }}
-            />
+            
+            <div className="form--search">
+                <form onSubmit = {SearchContact}>
+                    <h4>Pesquise o nome de um contato</h4>
+                    <input
+                        type={"text"}
+                        placeholder = "Digite o nome do contato"
+                        name = "name"
+                        //onChange = 
+                    />
+                </form>
+            </div>
+            
+            <h1> Lista de Contatos</h1>
+            <Button icon="person_add" onClick={() => { navigate("/addcontact") }} />
+            {/*<SearchIcon icon="search_icon" onClick={() => { navigate("/searchcontact")}} />*/} 
 
             {/* <Link to="/addcontact">
                 <p>AddContact</p>
@@ -51,7 +62,10 @@ export default function Home() {
                     )
                 })}
             </div>
+                
         </div>
+        
+    
     )
 }
 

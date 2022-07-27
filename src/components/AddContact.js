@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import {useNavigate} from "react-router-dom"
+import {useNavigate} from "react-router-dom";
 import Axios from "axios";
 import Button from "./buttoms";
+import HomeIcon from '@mui/icons-material/Home';
 
 export default function AddContact(){
     const [values, setValues] = useState('');
@@ -28,12 +29,8 @@ export default function AddContact(){
    
     return(
         <div className="container--form">
-         <Button
-                    icon="arrow_back_ios"
-                    onClick={() => {
-                        navigate("/")
-                    }}
-                />
+         <Button icon="arrow_back_ios" onClick={() => { navigate("/") }} />
+         {/*<HomeIcon icon="home_icon" onClick={() => { navigate("/") }} />*/} 
         <h1>AddContact</h1>
         <form className="form--add">
             {/* <label>Nome</label> */}
@@ -65,21 +62,21 @@ export default function AddContact(){
                 onChange={handleChange}
             />
              {/* <label>Imagem</label> */}
-             <input
+            <input
                 type={"text"}
                 placeholder="Imagem"
                 name="pic"
                 onChange={handleChange}
             />
              {/* <label>Social Midia</label> */}
-             <input
+            <input
                 type={"text"}
                 placeholder="Redes social"
                 name="id_cont_social"
                 onChange={handleChange}
             />
              {/* <label>Grupo</label> */}
-             <input
+            <input
                 type={"text"}
                 placeholder="Grupo"
                 name="id_contact_group"
