@@ -41,7 +41,7 @@ button:hover {
   margin: auto;
   margin-top: 10px;
   /* width: 60%; */
-  height: 20vh;
+  height: 25vh;
   border: solid 1px;
   border-radius: 15px;
   display: flex;
@@ -56,6 +56,10 @@ button:hover {
   transition: 0.4s;
 }
 
+.card--list h1 {
+  max-width: fit-content;
+  font-size: 1.5em;
+}
 .container-card{
   width: 80%;
   height: auto;
@@ -69,7 +73,7 @@ button:hover {
   margin: auto;
   margin-top: 100px;
   margin-bottom: 15px;
-  width: 35%;
+  width: 45%;
   height: auto;
   border: solid 1px;
   border-radius: 15px;
@@ -77,6 +81,11 @@ button:hover {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.card--contact h1 {
+  max-width: fit-content;
+  font-size: 1.5em;
 }
 
 .container--button{
@@ -91,7 +100,7 @@ button:hover {
 .container--form{
   width: 60%;
   height: auto;
-  border: solid 1px #000;
+  /* border: solid 1px #000; */
   margin: 50px auto;
   display: flex;
   justify-content: center;
@@ -103,6 +112,7 @@ button:hover {
   width: 80%;
   height: auto;
   border: solid 1px #000;
+  border-radius: 25px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -136,4 +146,62 @@ margin-left: 25px;
   border: transparent, solid;
   border-radius: 50%;
   background-color: rgba(187, 185, 185, 0.795);
+}
+
+.container--avatar{
+  width: 150px;
+  height: 150px;
+  border: transparent solid 1px;
+  border-radius: 50%;
+}
+
+.avatar{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+}
+
+.contact--modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.containerInput{
+  /* padding-top: 20px; */
+  padding-bottom: 0 auto;
+  /* margin-right: 10px; */
+  text-align: center;
+  display: flex;
+  align-items: center;
+  width: 50%;
+  /* border: #000 solid 1px; */
+}
+.inputPesquisar{
+  width: 100%;
+  height: 3em;
+  border-width: 0.5vh;
+  border-color: black solid;
+  border-radius: 10px;
+  
+}
+
+.bar-principal{
+  width: 50%;
+  /* border: #000 solid 1px; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.button-add {
+  width: 25%;
+  display: flex;
+
 }

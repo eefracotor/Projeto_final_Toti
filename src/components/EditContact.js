@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Axios from "axios";
 import { Card } from "./contact";
-import Button from "./buttoms";
+import ButtonIcon from "./buttoms";
 import FormDialog from "./Dialog";
 
 
@@ -41,7 +41,7 @@ export default function EditContact(){
     return(
         <div className="container-card">
             <div>
-                <Button 
+                <ButtonIcon 
                     icon="arrow_back_ios"
                     onClick={() => {
                         navigate("/")
@@ -77,17 +77,17 @@ export default function EditContact(){
                 
             />
             <div className="container--button">
-                <Button 
+                <ButtonIcon 
+                    icon = "edit"            
                     onClick={()=>{
                         handleClickCard()
                     }}
-                    icon="edit"            
                 />
-                <Button 
-                onClick={() => {
-                    handleDelete()
-                }}
-                    icon="delete"            
+                <ButtonIcon 
+                    icon = "delete"            
+                    onClick={() => {
+                        handleDelete()
+                    }}
                 />
             </div>
 

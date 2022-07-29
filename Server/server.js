@@ -1,14 +1,36 @@
 const express = require("express");
 const app = express();
 const sqlite3 = require("sqlite3");
-const { Sequelize, DataTypes, where } = require('sequelize');
 const cors = require("cors");
-const { useParams } = require("react-router-dom");
-
+const multer = require('multer');
+const path = require("path");
+const bodyParser = require('body-parser');
+// const { diskStorage } = require("multer");
+// const upload = multer({ dest: 'uploads/'});
 
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true}));
+app.use(express.static("Images"));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+// app.use(express.static(path.join(__dirname,'app/Images')));
+
+// Configuração de armazenamento
+const diskStorage = multer.diskStorage({
+    // destination:  (req, file, cb) => {
+    //     cb(null, path.join(__dirname,'../Images'))
+    // },
+    destination: path.join(__dirname,'Images'),
+    filename:  (req, file, cb) => {
+        cb(null, file.filename + '-' + Date.now() + path.extname(file.originalname))
+        // cb(null, file.filename + '-' + Date.now() + path.extname(file.originalname))
+    }
+});
+
+const upload = multer({ 
+    storage : diskStorage 
+});
 
 const db = new sqlite3.Database('./BD.db', (err) => {
     if (err) {
@@ -31,6 +53,7 @@ app.all("/list", (req,res) => {
     })
 })
 
+//seleccionar un contacto
 app.get('/contact/:id', (req,res) => {
     const {id} =req.params;
     let SQL = 'SELECT * FROM contato WHERE id = ?';
@@ -44,21 +67,46 @@ app.get('/contact/:id', (req,res) => {
     })
 })
 
-app.post("/addcontact", (req,res) => {
-    const {name} = req.body;
-    const {phone} = req.body;
-    const {email} = req.body;
-    const {adress} = req.body;
+//Crear un contacto
+app.post("/addcontact", upload.single('image'), (req,res) => {
+    console.log("File: "+ req.file)
+    const file = req.file.filename
+    console.log(file)
+    // const {name} = req.body;
+    // const {phone} = req.body;
+    // const {email} = req.body;
+    // const {adress} = req.body;
+    // const {pic} = req.file;
     
-    let SQL ="INSERT INTO contato (name, phone, email, adress, pic, id_cont_social, id_contact_group, id_work) VALUES ( ?,?,?,?,?,?,?,? )";
+    // res.send("pronto");
+    // res.json({name,site})
+    // res.json({name, phone, email, adress, pic})
+    // let SQL ="INSERT INTO contato (name, phone, email, adress, pic, id_cont_social, id_contact_group, id_work) VALUES ( ?,?,?,?,?,?,?,? )";
 
-    db.run(SQL,[name,phone,email,adress],(err, result) => {
-        if(err) console.log(err);
-        else console.log(result)
-    })
+    // db.run(SQL,[name,phone,email,adress,pic],(err, result) => {
+    //     if(err) console.log(err);
+    //     else console.log(result)
+    // })
     // console.log(name)
 })
 
+// app.post("/addcontact", upload.single('foto'), (req,res) => {
+//     const {name} = req.body;
+//     const {phone} = req.body;
+//     const {email} = req.body;
+//     const {adress} = req.body;
+    
+//     let SQL ="INSERT INTO contato (name, phone, email, adress, pic, id_cont_social, id_contact_group, id_work) VALUES ( ?,?,?,?,?,?,?,? )";
+
+//     db.run(SQL,[name,phone,email,adress],(err, result) => {
+//         if(err) console.log(err);
+//         else console.log(result)
+//     })
+//     // console.log(name)
+// })
+
+
+//Actualizar un contacto
 app.put('/edit/', (req,res) => {
     // const {id} =req.params;
     const {id} = req.body
@@ -81,6 +129,7 @@ app.put('/edit/', (req,res) => {
     console.log(req.body)
 })
 
+//Elominar un contacto
 app.delete("/delete/:id", (req, res) => {
     const {id} = req.params;
     let SQL = "DELETE FROM contato WHERE id = ?";

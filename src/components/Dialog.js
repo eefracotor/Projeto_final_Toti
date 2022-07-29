@@ -1,12 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom"
 import Axios from "axios";
-import Button from '@mui/material/Button';
+// import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import ButtonIcon from './buttoms';
+import { Icon } from "@mui/material";
 
 export default function FormDialog(props) {
    let navigate = useNavigate();
@@ -69,8 +71,21 @@ const handleDelete = ()=>{
   return (
     <div>
       <Dialog open={props.open} onClose={handleClose}>
-        <DialogTitle>Editar</DialogTitle>
+        <DialogTitle>
+            Editar Contato
+         </DialogTitle>
         <DialogContent>
+        <div className='contact--modal'>
+            <div className="container--avatar">
+               <img className="avatar" src='http://localhost:3001/user.png' alt="User" />
+            </div>
+            <input 
+                    type={"file"}
+                    placeholder="avatar"
+                    name="avatar"
+                  //   onChange={onFileChange}
+                    />
+        </div>
           <TextField
             disabled
             margin="dense"
@@ -94,7 +109,6 @@ const handleDelete = ()=>{
             variant="standard"
           />
           <TextField
-            autoFocus
             margin="dense"
             id="phone"
             label="Telefone"
@@ -105,7 +119,6 @@ const handleDelete = ()=>{
             variant="standard"
           />
           <TextField
-            autoFocus
             margin="dense"
             id="email"
             label="Email"
@@ -116,7 +129,6 @@ const handleDelete = ()=>{
             variant="standard"
           />
           <TextField
-            autoFocus
             margin="dense"
             id="adress"
             label="Endereço"
@@ -126,8 +138,7 @@ const handleDelete = ()=>{
             fullWidth
             variant="standard"
           />
-          <TextField
-            autoFocus
+          {/* <TextField
             margin="dense"
             id="pic"
             label="Imagem"
@@ -136,9 +147,8 @@ const handleDelete = ()=>{
             type="text"
             fullWidth
             variant="standard"
-          />
+          /> */}
           <TextField
-            autoFocus
             margin="dense"
             id="id_cont_social"
             defaultValue={props.id_cont_social}
@@ -149,7 +159,6 @@ const handleDelete = ()=>{
             variant="standard"
           />
           <TextField
-            autoFocus
             margin="dense"
             id="id_contact_group"
             label="Grupo"
@@ -160,7 +169,6 @@ const handleDelete = ()=>{
             variant="standard"
           />
           <TextField
-            autoFocus
             margin="dense"
             id="id_work"
             label="Trabalho"
@@ -172,13 +180,22 @@ const handleDelete = ()=>{
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={()=>{
-            handleDelete()
-          }}>Excluir</Button>
-          <Button onClick={() => {
-            handleSaveChange()
-          }}>Salvar</Button>
+            <ButtonIcon
+               icone = "cancel"
+               onClick={handleClose}
+            /> 
+            <ButtonIcon
+               icone = "delete"
+               onClick={()=>{
+                  handleDelete()
+               }}
+            />
+            <ButtonIcon
+               icone = "save"
+               onClick={() => {
+                  handleSaveChange()
+               }}
+            />
         </DialogActions>
       </Dialog>
     </div>

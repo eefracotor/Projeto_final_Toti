@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import {useNavigate} from "react-router-dom"
 import Axios from "axios";
-import Button from "./buttoms";
+import ButtonIcon from "./buttoms";
 
 export default function AddContact(){
     const [values, setValues] = useState('');
+    const [file, setFile] = useState(null);
+    const [fileName, setFileName] = useState("");
+    const [pathImage, setPathImage] = useState('http://localhost:3001/user.png');
     let navigate = useNavigate()
 
     const handleChange = value => {
@@ -14,29 +17,66 @@ export default function AddContact(){
             [value.target.name]: value.target.value
         }))
     }
-    const handleClick = () => {
-        Axios.post("http://localhost:3001/addcontact", {
-            name: values.name,
-            phone: values.phone,
-            email: values.email,
-            adress: values.adress
-        }).then((response) => {
-            console.log(response)
+
+    const onFileChange = (e) => {
+        setFile(e.target.files[0]);
+        if(e.target.files && e.target.files.length > 0) {
+            const files = e.target.files[0];
+            // const filesName = e.target.files[0].name;
+            if(files.type.includes('image')){
+                const reader = new FileReader()
+                reader.readAsDataURL(files)
+
+                reader.onload = function load() {
+                    setPathImage(reader.result)
+                }
+            }
+            // setFile(files);
+            setFileName(files);
+            console.log('file: '+ file);
+            // console.log('fileName: '+ filesName);
+        }else {
+            console.log("there was an error")
+        }
+    }
+
+    const handleClick = async (e) => {
+        // e.preventDefault()
+        const formData = new FormData();
+        formData.append('image', file);
+        // formData.append("fileName", fileName);
+        await Axios.post("http://localhost:3001/addcontact", formData, {
+            // name: values.name,
+            // phone: values.phone,
+            // email: values.email,
+            // adress: values.adress,
+             headers: { "Content-Type": "multipart/form-data" }
+        }).then((res) => {
+            console.log(res)
         });
-        navigate("/");
+        //navigate("/");
     };
    
     return(
         <div className="container--form">
-         <Button
-                    icon="arrow_back_ios"
-                    onClick={() => {
-                        navigate("/")
-                    }}
-                />
+            <ButtonIcon
+                icon="arrow_back_ios"
+                onClick={() => {
+                    navigate("/")
+                }}
+            />
         <h1>AddContact</h1>
-        <form className="form--add">
+        <form className="form--add" encType="multipart/form-data">
             {/* <label>Nome</label> */}
+            <div className="container--avatar">
+                    <img className="avatar" src={pathImage} alt="User" />
+            </div>
+                    <input 
+                    type={"file"}
+                    placeholder="avatar"
+                    name="avatar"
+                    onChange={onFileChange}
+                    />
             <input
                 type={"text"}
                 placeholder="Nome"
@@ -65,12 +105,7 @@ export default function AddContact(){
                 onChange={handleChange}
             />
              {/* <label>Imagem</label> */}
-             <input
-                type={"text"}
-                placeholder="Imagem"
-                name="pic"
-                onChange={handleChange}
-            />
+            
              {/* <label>Social Midia</label> */}
              <input
                 type={"text"}
@@ -92,7 +127,13 @@ export default function AddContact(){
                 onChange={handleChange}
             />
 
-            <button onClick={() =>handleClick()}>Salvar</button>
+            <ButtonIcon
+                icon = "save"
+                onClick={() => {
+                    handleClick()
+                }} />
+                
+            {/* Salvar</button> */}
         </form>
         </div>
     )
