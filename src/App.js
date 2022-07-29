@@ -12,7 +12,7 @@ function App() {
       <Router>
         <Routes>
           <Route exact path ="/" element = {<Home />} />
-          <Route path ="/search" element = {<Search />} />
+          {/*<Route path ="/searchcontact" element = {<Search />} />*/}
           <Route path='/addcontact' element ={<AddContact />} />
           <Route path='/contact/:id' element={<EditContact />} />
           <Route />

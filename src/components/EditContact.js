@@ -72,8 +72,8 @@ export default function EditContact(){
                 
             />
             <div className="container--button">
-                <Button onClick={()=>{ handleClickCard() }} icon="edit" />
-                <Button onClick={() => {handleDelete() }} icon="delete" />
+                <Button onClick={() => { handleClickCard() }} icon="edit" />
+                <Button onClick={() => { handleDelete() }} icon="delete" />
             </div>
             
         </div>

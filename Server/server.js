@@ -44,6 +44,21 @@ app.get('/contact/:id', (req,res) => {
     })
 })
 
+
+app.get('/searchcontact/:name', (req,res) => {
+    const {name} =req.params;
+    let SQL = 'SELECT * FROM contato WHERE name = ?';
+    db.get(SQL, [name], (err, result) => {
+        if (err) console.log(err);
+        else {
+            const teste =JSON.stringify(result)
+            console.log(teste);
+            res.send(teste);
+        }
+    })
+})
+
+
 app.post("/addcontact", (req,res) => {
     const {name} = req.body;
     const {phone} = req.body;
@@ -80,6 +95,7 @@ app.put('/edit/', (req,res) => {
     console.log(id)
     console.log(req.body)
 })
+
 
 app.delete("/delete/:id", (req, res) => {
     const {id} = req.params;

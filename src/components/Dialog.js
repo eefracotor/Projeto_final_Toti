@@ -23,9 +23,9 @@ export default function FormDialog(props) {
       email: props.email,
       adress: props.adress,
       pic: props.pic,
-      id_cont_social:props.id_cont_social,
+      id_cont_social: props.id_cont_social,
       id_contact_group: props.id_contact_group,
-      id_work:  props.id_work,
+      id_work: props.id_work,
    });
 
   const handleChangeValues = (values) => {
@@ -173,12 +173,8 @@ const handleDelete = ()=>{
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={()=>{
-            handleDelete()
-          }}>Excluir</Button>
-          <Button onClick={() => {
-            handleSaveChange()
-          }}>Salvar</Button>
+          <Button onClick={() => { handleDelete() }}>Excluir</Button>
+          <Button onClick={() => { handleSaveChange() }}>Salvar</Button>
         </DialogActions>
       </Dialog>
     </div>
