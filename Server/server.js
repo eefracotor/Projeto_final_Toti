@@ -5,16 +5,15 @@ const cors = require("cors");
 const multer = require('multer');
 const path = require("path");
 const bodyParser = require('body-parser');
-// const { diskStorage } = require("multer");
-// const upload = multer({ dest: 'uploads/'});
+
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 app.use(express.static("Images"));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
-// app.use(express.static(path.join(__dirname,'app/Images')));
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static(path.join(__dirname,'app/Images')));
 
 // Configuração de armazenamento
 const diskStorage = multer.diskStorage({
@@ -23,7 +22,8 @@ const diskStorage = multer.diskStorage({
     // },
     destination: path.join(__dirname,'Images'),
     filename:  (req, file, cb) => {
-        cb(null, file.filename + '-' + Date.now() + path.extname(file.originalname))
+        cb(null, Date.now() + '-grupo#1toti-' + file.originalname)
+        // cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
         // cb(null, file.filename + '-' + Date.now() + path.extname(file.originalname))
     }
 });
@@ -69,24 +69,25 @@ app.get('/contact/:id', (req,res) => {
 
 //Crear un contacto
 app.post("/addcontact", upload.single('image'), (req,res) => {
-    console.log("File: "+ req.file)
-    const file = req.file.filename
-    console.log(file)
-    // const {name} = req.body;
-    // const {phone} = req.body;
-    // const {email} = req.body;
-    // const {adress} = req.body;
-    // const {pic} = req.file;
+    // console.log("File: "+ req.file)
+    // const file = req.file.filename
+    // console.log(file)
+    const {name} = req.body;
+    const {phone} = req.body;
+    const {email} = req.body;
+    const {adress} = req.body;
+    var img = `'\'http://localhost:3001/${req.file.filename}'\'`;
+     
     
     // res.send("pronto");
     // res.json({name,site})
-    // res.json({name, phone, email, adress, pic})
-    // let SQL ="INSERT INTO contato (name, phone, email, adress, pic, id_cont_social, id_contact_group, id_work) VALUES ( ?,?,?,?,?,?,?,? )";
+    res.json({name, phone, email, adress, img})
+    let SQL ="INSERT INTO contato (name, phone, email, adress, pic, id_cont_social, id_contact_group, id_work) VALUES ( ?,?,?,?,?,?,?,? )";
 
-    // db.run(SQL,[name,phone,email,adress,pic],(err, result) => {
-    //     if(err) console.log(err);
-    //     else console.log(result)
-    // })
+    db.run(SQL,[name,phone,email,adress,img],(err, result) => {
+        if(err) console.log(err);
+        else console.log(result)
+    })
     // console.log(name)
 })
 

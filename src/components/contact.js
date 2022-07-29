@@ -5,7 +5,7 @@ export default function Contacto(props){
    return(
       <div className="card--list">
          <PhotoList
-            src = 'http://localhost:3001/user.png'
+            src = 'http://localhost:3001/user.png'// 'http://localhost:3001/1659129281758-grupo#1toti-1555453.jpg'
          />
          <h1>{props.name}</h1>
          <p>{props.phone}</p>
@@ -18,7 +18,7 @@ export function Card(props){
    return(
       <div className="card--contact">
          <PhotoCard 
-            src = 'http://localhost:3001/user.png'
+            src = {props.pic}  // 'http://localhost:3001/user.png'
          />
          <h1>{props.name}</h1>
          <p>{props.phone}</p>

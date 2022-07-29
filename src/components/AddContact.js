@@ -46,15 +46,15 @@ export default function AddContact(){
         formData.append('image', file);
         // formData.append("fileName", fileName);
         await Axios.post("http://localhost:3001/addcontact", formData, {
-            // name: values.name,
-            // phone: values.phone,
-            // email: values.email,
-            // adress: values.adress,
-             headers: { "Content-Type": "multipart/form-data" }
+            name: values.name,
+            phone: values.phone,
+            email: values.email,
+            adress: values.adress,
+            headers: { "Content-Type": "multipart/form-data" },
         }).then((res) => {
             console.log(res)
         });
-        //navigate("/");
+        navigate("/");
     };
    
     return(
@@ -129,9 +129,11 @@ export default function AddContact(){
 
             <ButtonIcon
                 icon = "save"
+                // onClick = {handleClick}
                 onClick={() => {
                     handleClick()
-                }} />
+                }} 
+                />
                 
             {/* Salvar</button> */}
         </form>
