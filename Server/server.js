@@ -11,8 +11,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 app.use(express.static("Images"));
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname,'app/Images')));
 
 // Configuração de armazenamento
@@ -22,7 +22,7 @@ const diskStorage = multer.diskStorage({
     // },
     destination: path.join(__dirname,'Images'),
     filename:  (req, file, cb) => {
-        cb(null, Date.now() + '-grupo#1toti-' + file.originalname)
+        cb(null, Date.now() + '-grupo-1-toti-' + file.originalname)
         // cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
         // cb(null, file.filename + '-' + Date.now() + path.extname(file.originalname))
     }
@@ -71,12 +71,14 @@ app.get('/contact/:id', (req,res) => {
 app.post("/addcontact", upload.single('image'), (req,res) => {
     // console.log("File: "+ req.file)
     // const file = req.file.filename
-    // console.log(file)
+    console.log("Body: ",req)
     const {name} = req.body;
     const {phone} = req.body;
     const {email} = req.body;
     const {adress} = req.body;
-    var img = `'\'http://localhost:3001/${req.file.filename}'\'`;
+    req.file == null ? img = "user.png" : img = req.file.filename;
+    // var img = req.file.filename;
+    // var img = `'\'http://localhost:3001/${req.file.filename}'\'`;
      
     
     // res.send("pronto");
@@ -115,14 +117,14 @@ app.put('/edit/', (req,res) => {
     const {phone} = req.body
     const {email} = req.body
     const {adress} = req.body
-    const {pic} = req.body
+    img = req.file.filename;
     const {id_cont_social} = req.body
     const {id_contact_group} = req.body
     const {id_work} = req.body
     
     let SQL ="UPDATE contato SET name = ?, phone = ?, email = ?, adress = ?, pic = ?, id_cont_social = ?, id_contact_group = ?, id_work = ? WHERE id = ?";
     // console.log(req)
-    db.run(SQL,[name, phone, email, adress, pic, id_cont_social, id_contact_group, id_work, id],(err, result) => {
+    db.run(SQL,[name, phone, email, adress, img, id_cont_social, id_contact_group, id_work, id],(err, result) => {
         if(err) console.log(err);
         else console.log(result)
     })

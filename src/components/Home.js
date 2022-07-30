@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom"
 import ButtonIcon from "./buttoms";
 import Contacto from "./contact";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { PropaneSharp } from "@mui/icons-material";
 
 
 
@@ -109,6 +110,7 @@ export default function Home() {
                                 name={contact.name}
                                 phone={contact.phone}
                                 email={contact.email}
+                                pic={contact.pic}
                             ></Contacto>
                         </Link>
                     )

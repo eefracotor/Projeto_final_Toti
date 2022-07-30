@@ -11,9 +11,36 @@ import ButtonIcon from './buttoms';
 import { Icon } from "@mui/material";
 
 export default function FormDialog(props) {
-   let navigate = useNavigate();
-   let URL = `http://localhost:3001/${props.id}` 
+  props.pic ? URL = `http://localhost:3001/${props.pic}` : URL = 'http://localhost:3001/user.png'
+  const [pathImage, setPathImage] = useState(URL);
+  const [fileName, setFileName] = useState("");
+  const [file, setFile] = useState()
 
+   let navigate = useNavigate();
+  //  let URL = `http://localhost:3001/${props.id}` 
+
+
+  const onFileChange = (e) => {
+    setFile(e.target.files[0]);
+    if(e.target.files && e.target.files.length > 0) {
+        const files = e.target.files[0];
+        // const filesName = e.target.files[0].name;
+        if(files.type.includes('image')){
+            const reader = new FileReader()
+            reader.readAsDataURL(files)
+
+            reader.onload = function load() {
+                setPathImage(reader.result)
+            }
+        }
+        // setFile(files);
+        setFileName(files);
+        console.log('file: '+ file);
+        // console.log('fileName: '+ filesName);
+    }else {
+        console.log("there was an error")
+    }
+}
    const handleClose = () => {
       props.setOpen(false);
    };
@@ -24,7 +51,7 @@ export default function FormDialog(props) {
       phone: props.phone,
       email: props.email,
       adress: props.adress,
-      pic: props.pic,
+      // pic: props.pic,
       id_cont_social:props.id_cont_social,
       id_contact_group: props.id_contact_group,
       id_work:  props.id_work,
@@ -43,16 +70,28 @@ export default function FormDialog(props) {
    )
    
    if(isSave) {
-      Axios.put(`http://localhost:3001/edit`, {
+    const formData = new FormData();
+        formData.append('image', file);
+        formData.append('name', editValue.name);
+        formData.append('phone', editValue.phone);
+        formData.append('email', editValue.email);
+        formData.append('adress', editValue.adress);
+        formData.append('id_cont_social', editValue.id_cont_social);
+        formData.append('id_contact_group', editValue.id_contact_group);
+        formData.append('id_work', editValue.id_work);
+      Axios.post(`http://localhost:3001/edit`, formData, {
          id: props.id,
-         name: editValue.name,
-         phone: editValue.phone,
-         email: editValue.email,
-         adress: editValue.adress,
-         pic: editValue.pic,
-         id_cont_social: editValue.id_cont_social,
-         id_contact_group: editValue.id_contact_group,
-         id_work: editValue.id_work,
+         headers: { "Content-Type": "multipart/form-data" },
+
+        //  name: editValue.name,
+        //  phone: editValue.phone,
+        //  email: editValue.email,
+        //  adress: editValue.adress,
+        //  pic: editValue.pic,
+        //  id_cont_social: editValue.id_cont_social,
+        //  id_contact_group: editValue.id_contact_group,
+        //  id_work: editValue.id_work,
+        
       });
       navigate("/");
    }
@@ -77,13 +116,13 @@ const handleDelete = ()=>{
         <DialogContent>
         <div className='contact--modal'>
             <div className="container--avatar">
-               <img className="avatar" src='http://localhost:3001/user.png' alt="User" />
+               <img className="avatar" src={URL} alt="User" />
             </div>
             <input 
                     type={"file"}
                     placeholder="avatar"
                     name="avatar"
-                  //   onChange={onFileChange}
+                    onChange={onFileChange}
                     />
         </div>
           <TextField

@@ -44,17 +44,21 @@ export default function AddContact(){
         // e.preventDefault()
         const formData = new FormData();
         formData.append('image', file);
+        formData.append('name', values.name);
+        formData.append('phone', values.phone);
+        formData.append('email', values.email);
+        formData.append('adress', values.adress);
         // formData.append("fileName", fileName);
         await Axios.post("http://localhost:3001/addcontact", formData, {
-            name: values.name,
-            phone: values.phone,
-            email: values.email,
-            adress: values.adress,
             headers: { "Content-Type": "multipart/form-data" },
+            // name: values.name,
+            // phone: values.phone,
+            // email: values.email,
+            // adress: values.adress,
         }).then((res) => {
             console.log(res)
         });
-        navigate("/");
+        // navigate("/");
     };
    
     return(
