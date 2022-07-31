@@ -6,3 +6,9 @@ export default function Avatar(props) {
       <img className="avatar" src={props.src} alt="User" />
    )
 }
+
+export function IconCamera(props) {
+   return(
+      <img src={props.src} alt="Selecione uma imagem" id="imgPhoto" /> 
+   )
+}

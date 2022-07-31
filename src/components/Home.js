@@ -5,10 +5,12 @@ import ButtonIcon from "./buttoms";
 import Contacto from "./contact";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { PropaneSharp } from "@mui/icons-material";
+import FormAddContact from "./formAddContact";
 
 
 
 export default function Home() { 
+    const [open, setOpen] = useState(false);
     const [contato, setContact] = useState([]);
     const URL = "http://localhost:3001/list";
     const [formContacts, setFormContacts] = useState([]); 
@@ -58,6 +60,11 @@ export default function Home() {
             setContact(listOrd);
         });
     }, []);
+
+    //modal
+    const handleClickCard = () =>{
+        setOpen(true)
+    }
     
     return (
         <div className="home">
@@ -83,24 +90,22 @@ export default function Home() {
                 <ButtonIcon
                     icon="person_add"
                     onClick={() => {
-                        navigate("/addcontact")
+                        handleClickCard()
+                        // navigate("/addcontact")
                     }}
                 />
                 <ButtonIcon
                     icon="group_add"
-                    // onClick={() => {
-                    //     navigate("/addcontact")
-                    // }}
+                    onClick={() => {
+                        navigate("/addgroup")
+                    }}
                 />
                 </div>
             </div>
-
-            {/* <Link to="/addcontact">
-                <p>AddContact</p>
-            </Link>
-            <Link to="/contact/">
-                <p>EditContact</p>
-            </Link> */}
+            <FormAddContact
+                open={open} 
+                setOpen={setOpen}
+            />
             <div className="lista--contact">
                 {typeof contato !== "undefined" && contato.map((contact) => {
                     return (

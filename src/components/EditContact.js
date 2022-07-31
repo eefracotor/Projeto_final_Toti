@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import Axios from "axios";
 import { Card } from "./contact";
 import ButtonIcon from "./buttoms";
-import FormDialog from "./Dialog";
+import FormDialog from "./Dialog"; //modal
 
 
 
@@ -13,7 +13,7 @@ export default function EditContact(){
     let navigate = useNavigate()
     
     const [contato, setContato] = useState([]);
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(false); //modal
     console.log(contato);
     useEffect(() => {
         Axios.get(URL)
@@ -23,7 +23,7 @@ export default function EditContact(){
         });
     }, [id]);
 
-    const handleClickCard = () =>{
+    const handleClickCard = () =>{ //modal
         setOpen(true)
     }
 
@@ -37,7 +37,7 @@ export default function EditContact(){
         }
         // handleClose();
      }
-     console.log(contato)  
+    //  console.log(contato)  
     return(
         <div className="container-card">
             <div>
@@ -48,7 +48,7 @@ export default function EditContact(){
                     }}
                 />
             </div>
-            <FormDialog 
+            <FormDialog //modal
                 open={open} 
                 setOpen={setOpen}
                 id={contato.id}

@@ -9,13 +9,16 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import ButtonIcon from './buttoms';
 import { Icon } from "@mui/material";
+import {IconCamera} from "./photo/avatar"
 
 export default function FormDialog(props) {
-  props.pic ? URL = `http://localhost:3001/${props.pic}` : URL = 'http://localhost:3001/user.png'
+  // URL = `http://localhost:3001/${props.pic}`: URL = 'http://localhost:3001/user.png'
+  props.pic ?  URL = `http://localhost:3001/${props.pic}` : URL = 'http://localhost:3001/user.png' 
   const [pathImage, setPathImage] = useState(URL);
   const [fileName, setFileName] = useState("");
-  const [file, setFile] = useState()
-
+  const [file, setFile] = useState();
+  const [phones, setPhones] = useState([]);
+  
    let navigate = useNavigate();
   //  let URL = `http://localhost:3001/${props.id}` 
 
@@ -33,8 +36,9 @@ export default function FormDialog(props) {
                 setPathImage(reader.result)
             }
         }
-        // setFile(files);
+        setFile(files);
         setFileName(files);
+        // handleChangeValues(props);
         console.log('file: '+ file);
         // console.log('fileName: '+ filesName);
     }else {
@@ -69,30 +73,22 @@ export default function FormDialog(props) {
       "Desea guardar los cambios realizados?"
    )
    
+   const formData = new FormData();
+   formData.append('image', file);
+   formData.append('id', props.id);
+   formData.append('name', editValue.name);
+  //  formData.append('phone', editValue.phone);
+   formData.append('email', editValue.email);
+   formData.append('adress', editValue.adress);
+   formData.append('id_cont_social', editValue.id_cont_social);
+   formData.append('id_contact_group', editValue.id_contact_group);
+   formData.append('id_work', editValue.id_work);
    if(isSave) {
-    const formData = new FormData();
-        formData.append('image', file);
-        formData.append('name', editValue.name);
-        formData.append('phone', editValue.phone);
-        formData.append('email', editValue.email);
-        formData.append('adress', editValue.adress);
-        formData.append('id_cont_social', editValue.id_cont_social);
-        formData.append('id_contact_group', editValue.id_contact_group);
-        formData.append('id_work', editValue.id_work);
-      Axios.post(`http://localhost:3001/edit`, formData, {
-         id: props.id,
-         headers: { "Content-Type": "multipart/form-data" },
-
-        //  name: editValue.name,
-        //  phone: editValue.phone,
-        //  email: editValue.email,
-        //  adress: editValue.adress,
-        //  pic: editValue.pic,
-        //  id_cont_social: editValue.id_cont_social,
-        //  id_contact_group: editValue.id_contact_group,
-        //  id_work: editValue.id_work,
-        
-      });
+      Axios.post('http://localhost:3001/edit', formData, {
+        headers: { "Content-Type": "multipart/form-data" }        
+      }).then((res) => {
+        console.log(res)
+    });
       navigate("/");
    }
 };
@@ -106,131 +102,211 @@ const handleDelete = ()=>{
        navigate("/")
    }
 }
-
+// setPhones(props.phone)
+// console.log("telefonos ",props)
   return (
     <div>
-      <Dialog open={props.open} onClose={handleClose}>
+      <Dialog 
+        open={props.open} 
+        onClose={handleClose}
+        fullWidth
+        maxWidth="sm"
+      >
         <DialogTitle>
             Editar Contato
          </DialogTitle>
         <DialogContent>
-        <div className='contact--modal'>
-            <div className="container--avatar">
-               <img className="avatar" src={URL} alt="User" />
+          <form  encType="multipart/form-data">
+
+          <div className='contact--modal'>
+              <div className="container--avatar">
+                <img className="avatar" src={pathImage} alt="User" />
+                <label htmlFor="avatar1">
+                  <IconCamera 
+                    src="http://localhost:3001/photo-camera.png" 
+                  />
+                </label>
+              </div>
+              <input 
+                id="avatar1"
+                type={"file"}
+                placeholder="avatar"
+                name="avatar1"
+                onChange={onFileChange}
+                accept="image/*"
+              />
+          </div>
+            <TextField
+              disabled
+              margin="dense"
+              id="id"
+              label="ID"
+              defaultValue={props.id}
+              onChange={handleChangeValues}
+              type="text"
+              fullWidth
+              variant="standard"
+            />
+            <div className="textFile">
+              <label>
+              <img className="photo-icon-form"
+                  src="http://localhost:3001/user1.png" 
+              />
+              </label>
+              <TextField
+                autoFocus
+                margin="dense"
+                id="name"
+                label="Nome"
+                defaultValue={props.name}
+                onChange={handleChangeValues}
+                type="text"
+                fullWidth
+                variant="standard"
+              />
             </div>
-            <input 
-                    type={"file"}
-                    placeholder="avatar"
-                    name="avatar"
-                    onChange={onFileChange}
-                    />
-        </div>
-          <TextField
-            disabled
-            margin="dense"
-            id="id"
-            label="ID"
-            defaultValue={props.id}
-            onChange={handleChangeValues}
-            type="text"
-            fullWidth
-            variant="standard"
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Nome"
-            defaultValue={props.name}
-            onChange={handleChangeValues}
-            type="text"
-            fullWidth
-            variant="standard"
-          />
-          <TextField
-            margin="dense"
-            id="phone"
-            label="Telefone"
-            defaultValue={props.phone}
-            onChange={handleChangeValues}
-            type="text"
-            fullWidth
-            variant="standard"
-          />
-          <TextField
-            margin="dense"
-            id="email"
-            label="Email"
-            defaultValue={props.email}
-            onChange={handleChangeValues}
-            type="email"
-            fullWidth
-            variant="standard"
-          />
-          <TextField
-            margin="dense"
-            id="adress"
-            label="Endereço"
-            defaultValue={props.adress}
-            onChange={handleChangeValues}
-            type="text"
-            fullWidth
-            variant="standard"
-          />
-          {/* <TextField
-            margin="dense"
-            id="pic"
-            label="Imagem"
-            defaultValue={props.pic}
-            onChange={handleChangeValues}
-            type="text"
-            fullWidth
-            variant="standard"
-          /> */}
-          <TextField
-            margin="dense"
-            id="id_cont_social"
-            defaultValue={props.id_cont_social}
-            onChange={handleChangeValues}
-            label="Redes"
-            type="text"
-            fullWidth
-            variant="standard"
-          />
-          <TextField
-            margin="dense"
-            id="id_contact_group"
-            label="Grupo"
-            defaultValue={props.id_contact_group}
-            onChange={handleChangeValues}
-            type="text"
-            fullWidth
-            variant="standard"
-          />
-          <TextField
-            margin="dense"
-            id="id_work"
-            label="Trabalho"
-            defaultValue={props.id_work}
-            onChange={handleChangeValues}
-            type="text"
-            fullWidth
-            variant="standard"
-          />
+            {/* <div>
+              {(props.phone)?.map((phone, index) => (
+                    <div key={phone} className="phone--input" >
+                      <img className="photo-icon-form"
+                            src="http://localhost:3001/telephone.png" 
+                      />
+                      <TextField 
+                          margin="dense"
+                          label={`Telefone ${index+1}`}
+                          fullWidth
+                          variant="standard"
+                          id={`phone-${+1}`}
+                          type={"text"}
+                          placeholder={`Telefone ${index + 1}`}
+                          name="phone"
+                          defaultValue={phone[index]}
+                          // onChange={(e) => handleChangePhone(e, index)}
+                      />
+                      <ButtonIcon
+                          icon ="highlight_off"
+                          // onClick = {(e) => handleRemovePhone(e, index)}
+                      />
+                    </div>
+
+                ))}
+
+            </div> */}
+            <div className="textFile">
+              <img className="photo-icon-form"
+                  src="http://localhost:3001/telephone.png" 
+              />
+              <TextField
+                margin="dense"
+                id="phone"
+                label="Telefone"
+                defaultValue={props.phone}
+                onChange={handleChangeValues}
+                type="text"
+                fullWidth
+                variant="standard"
+              />
+            </div>
+            <div className="textFile">
+              <label>
+                  <img className="photo-icon-form"
+                        src="http://localhost:3001/mail.png" 
+                  />
+               </label>
+              <TextField
+                margin="dense"
+                id="email"
+                label="Email"
+                defaultValue={props.email}
+                onChange={handleChangeValues}
+                type="email"
+                fullWidth
+                variant="standard"
+              />
+            </div>
+            <div className="textFile">
+              <label>
+                <img className="photo-icon-form"
+                    src="http://localhost:3001/location.png" 
+                />
+              </label>
+              <TextField
+                margin="dense"
+                id="adress"
+                label="Endereço"
+                defaultValue={props.adress}
+                onChange={handleChangeValues}
+                type="text"
+                fullWidth
+                variant="standard"
+              />
+            </div>
+            <div className="textFile">
+                <label>
+                  <img className="photo-icon-form"
+                        src="http://localhost:3001/photo-camera.png" 
+                  />
+                </label>
+                <TextField
+                  margin="dense"
+                  id="id_cont_social"
+                  defaultValue={props.id_cont_social}
+                  onChange={handleChangeValues}
+                  label="Redes"
+                  type="text"
+                  fullWidth
+                  variant="standard"
+                />
+            </div>
+            <div className="textFile">
+              <label>
+                <img className="photo-icon-form"
+                    src="http://localhost:3001/people.png" 
+                />
+              </label>
+              <TextField
+                margin="dense"
+                id="id_contact_group"
+                label="Grupo"
+                defaultValue={props.id_contact_group}
+                onChange={handleChangeValues}
+                type="text"
+                fullWidth
+                variant="standard"
+              />
+            </div>
+            <div className="textFile">
+              <label>
+                <img className="photo-icon-form"
+                    src="http://localhost:3001/suitcase.png" 
+                />
+              </label>
+              <TextField
+                margin="dense"
+                id="id_work"
+                label="Trabalho"
+                defaultValue={props.id_work}
+                onChange={handleChangeValues}
+                type="text"
+                fullWidth
+                variant="standard"
+              />
+            </div>
+          </form>
         </DialogContent>
         <DialogActions>
             <ButtonIcon
-               icone = "cancel"
+               icon = "cancel"
                onClick={handleClose}
             /> 
             <ButtonIcon
-               icone = "delete"
+               icon = "delete"
                onClick={()=>{
                   handleDelete()
                }}
             />
             <ButtonIcon
-               icone = "save"
+               icon = "save"
                onClick={() => {
                   handleSaveChange()
                }}

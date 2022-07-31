@@ -2,9 +2,14 @@ import React, { useState } from "react";
 import {useNavigate} from "react-router-dom"
 import Axios from "axios";
 import ButtonIcon from "./buttoms";
+import { IconCamera } from "./photo/avatar";
+import FormDialog from "./Dialog";
+import { TextField, Icon } from "@mui/material";
+// import Icon from "react-icon";
 
 export default function AddContact(){
     const [values, setValues] = useState('');
+    const [phones, setPhones] = useState([]);
     const [file, setFile] = useState(null);
     const [fileName, setFileName] = useState("");
     const [pathImage, setPathImage] = useState('http://localhost:3001/user.png');
@@ -45,7 +50,7 @@ export default function AddContact(){
         const formData = new FormData();
         formData.append('image', file);
         formData.append('name', values.name);
-        formData.append('phone', values.phone);
+        formData.append('phone', phones);
         formData.append('email', values.email);
         formData.append('adress', values.adress);
         // formData.append("fileName", fileName);
@@ -60,7 +65,22 @@ export default function AddContact(){
         });
         // navigate("/");
     };
+    const handleAddPhone = (e) => {
+        e.preventDefault();
+        console.log("activado!");
+        setPhones([...phones,""]);
+    }
    
+    const handleChangePhone =(e, index) => {
+        phones[index] = e.target.value;
+        setPhones([...phones])
+    }
+
+    const handleRemovePhone = (e, position) => {
+        // e.preventDefault();
+        e.preventDefault();
+        setPhones([...phones.filter((_, index) => index != position)])
+    }
     return(
         <div className="container--form">
             <ButtonIcon
@@ -74,62 +94,169 @@ export default function AddContact(){
             {/* <label>Nome</label> */}
             <div className="container--avatar">
                     <img className="avatar" src={pathImage} alt="User" />
+                        <label for="avatar">
+                            <IconCamera 
+                                src="http://localhost:3001/photo-camera.png" 
+                            />
+                        </label>
             </div>
-                    <input 
+            <div className="container--inputs">
+                <input 
+                    id="avatar"
                     type={"file"}
                     placeholder="avatar"
                     name="avatar"
                     onChange={onFileChange}
+                    accept="image/*"
+                />
+                <div className="textFile">
+                    <label>
+                        <img className="photo-icon-form"
+                            src="http://localhost:3001/user1.png" 
+                        />
+                    </label>
+                    <TextField
+                        className="teste"
+                        autoFocus
+                        type={"text"}
+                        placeholder="Nome"
+                        name="name"
+                        margin="dense"
+                        label="Nome"
+                        fullWidth 
+                        variant="standard"
+                        defaultValue={null}
+                        onChange={handleChange}
                     />
-            <input
-                type={"text"}
-                placeholder="Nome"
-                name="name"
-                onChange={handleChange}
-            />
-            {/* <label>Telefone</label> */}
-            <input
-                type={"text"}
-                placeholder="Telefone"
-                name="phone"
-                onChange={handleChange}
-            />
-            {/* <label>Email</label> */}
-            <input
-                type={"text"}
-                placeholder="seu@email.com"
-                name="email"
-                onChange={handleChange}
-            />
-            {/* <label>Endereço</label> */}
-            <input
-                type={"text"}
-                placeholder="Endereço"
-                name="adress"
-                onChange={handleChange}
-            />
-             {/* <label>Imagem</label> */}
-            
-             {/* <label>Social Midia</label> */}
-             <input
-                type={"text"}
-                placeholder="Redes social"
-                name="id_cont_social"
-                onChange={handleChange}
-            />
-             {/* <label>Grupo</label> */}
-             <input
-                type={"text"}
-                placeholder="Grupo"
-                name="id_contact_group"
-                onChange={handleChange}
-            /> {/* <label>trabalho</label> */}
-            <input
-                type={"text"}
-                placeholder="Trabalho"
-                name="id_work"
-                onChange={handleChange}
-            />
+                </div>
+                <div className="list--phone"> 
+                    <div className="container--phone">
+                        {phones.map((phone, index) => (
+                            <div key={index} className="phone--input" >
+                                <img className="photo-icon-form"
+                                    src="http://localhost:3001/telephone.png" 
+                                />
+                                <TextField 
+                                    margin="dense"
+                                    label={`Telefone ${index+1}`}
+                                    fullWidth
+                                    variant="standard"
+                                    id={`phone-${index+1}`}
+                                    type={"text"}
+                                    placeholder={`Telefone ${index + 1}`}
+                                    name="phone"
+                                    value={phone}
+                                    onChange={(e) => handleChangePhone(e, index)}
+                                />
+                                <ButtonIcon
+                                    icon ="highlight_off"
+                                    onClick = {(e) => handleRemovePhone(e, index)}
+                                />
+                            </div>
+
+                        ))}
+                    </div>
+                    <div className="btn-add-phone">
+                        <hr />
+                        <ButtonIcon
+                            className="addPhone"
+                            icon="add_ic_call"
+                            onClick={handleAddPhone}
+                        />
+                        <p> Adicionar número de telefone</p>
+                    </div>
+                </div>
+                <div className="textFile">
+                    <label>
+                        <img className="photo-icon-form"
+                            src="http://localhost:3001/mail.png" 
+                        />
+                    </label>
+                    <TextField
+                        type={"text"}
+                        placeholder="seu@email.com"
+                        name="email"
+                        margin="dense"
+                        label="E-mail"
+                        fullWidth
+                        variant="standard"
+                        defaultValue={null}
+                        onChange={handleChange}
+                    />                    
+                </div>                
+                <div className="textFile">
+                    <label>
+                        <img className="photo-icon-form"
+                            src="http://localhost:3001/location.png" 
+                        />
+                    </label>
+                    <TextField
+                        type={"text"}
+                        placeholder="Endereço"
+                        name="adress"
+                        margin="dense"
+                        label="Endereço"
+                        fullWidth
+                        variant="standard"
+                        defaultValue={null}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="textFile">
+                    <label>
+                        <img className="photo-icon-form"
+                            src="http://localhost:3001/photo-camera.png" 
+                        />
+                    </label>
+                    <TextField
+                        type={"text"}
+                        placeholder="Redes social"
+                        name="id_cont_social"
+                        margin="dense"
+                        label="Social Media"
+                        fullWidth
+                        variant="standard"
+                        defaultValue={null}
+                        onChange={handleChange}
+                    />
+                </div>                
+                <div className="textFile">
+                    <label>
+                        <img className="photo-icon-form"
+                            src="http://localhost:3001/people.png" 
+                        />
+                    </label>
+                    <TextField
+                        type={"text"}
+                        placeholder="Grupo"
+                        name="id_contact_group"
+                        margin="dense"
+                        label="Grupo"
+                        fullWidth
+                        variant="standard"
+                        defaultValue={null}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="textFile">
+                    <label>
+                        <img className="photo-icon-form"
+                            src="http://localhost:3001/suitcase.png" 
+                        />
+                    </label>
+                    <TextField
+                        type={"text"}
+                        placeholder="Trabalho"
+                        margin="dense"
+                        label="Trabalho"
+                        fullWidth
+                        variant="standard"
+                        name="id_work"
+                        defaultValue={null}
+                        onChange={handleChange}
+                    />
+                </div>
+            </div>
 
             <ButtonIcon
                 icon = "save"

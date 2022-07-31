@@ -1,6 +1,7 @@
 * {
   padding: 0;
   margin: 0%;
+  box-sizing: border-box;
 }
  a{
   text-decoration: none;
@@ -25,7 +26,9 @@ button:hover {
   background-color: rgba(124, 124, 124, 0.493);
   transition: 0.35s;
 }
-
+ input[type="file"] {
+  display: none;
+ }
 .home{
   margin: auto;
   width: 75%;
@@ -41,7 +44,7 @@ button:hover {
   margin: auto;
   margin-top: 10px;
   /* width: 60%; */
-  height: 25vh;
+  height: 30vh;
   border: solid 1px;
   border-radius: 15px;
   display: flex;
@@ -120,6 +123,14 @@ button:hover {
   margin-bottom: 5vh;
 }
 
+.container--inputs {
+  width: 80%;
+}
+
+.container--phone {
+  width: 100%;
+}
+
 .form--add input{
   width: 60%;
   line-height: 5vh;
@@ -153,6 +164,7 @@ margin-left: 25px;
   height: 150px;
   border: transparent solid 1px;
   border-radius: 50%;
+  position: relative;
 }
 
 .avatar{
@@ -204,4 +216,107 @@ margin-left: 25px;
   width: 25%;
   display: flex;
 
+}
+
+/* .max_width{
+  max-width: 50px;
+  width: 100%;
+} */
+
+.imageConteiner{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 50px;
+  /* width: 100%; */
+}
+
+#imgPhoto{
+  position: absolute;
+  top: 100px;
+  left: 100px;
+  /* margin-top: 10px; */
+  max-width: 25%;
+  /* padding: 10px; */
+  background-color: #eee;
+  /* border: 5px solid #ccc; */
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background .3s;
+}
+
+#imgPhoto:hover{
+ background-color: rgb(180, 180, 180);
+ /* background-color: rgba(124, 124, 124, 0.75); */
+}
+
+.addPhone{
+  left: 100px;
+}
+
+.textFile {
+  /* height: 10vh;
+  border: #000 solid 1px;
+  border-radius: 25px;
+  margin-top: 15px; */
+
+}
+
+.teste {
+  height: 10vh;
+  /* border: #000 solid 1px; */
+  border-radius: 25px;
+  margin-top: 15px;
+}
+
+.list--phone {
+  /* border: #000 solid 1px; */
+  /* border-radius: 25px; */
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  /* position: relative; */
+}
+
+.container--phone {
+  /* position: absolute; */
+  /* margin-top: -75px;
+  margin-left: 90%;
+  z-index: 4; */
+  /* right: -600px; */
+  /* display: flex;
+  flex-direction: column; */
+}
+
+.phone--input, .textFile {
+  display: flex;
+  align-items: center;
+}
+
+.btn-add-phone {
+  /* margin-top: 25px; */
+  display: inline-flex;
+  /* flex-direction: row; */
+  align-items: center;
+  /* margin-left: -60%; */
+
+}
+
+.btn-add-phone p {
+  margin: auto;
+  font-size: 1em;
+}
+
+.photo-icon-form {
+  width: 25px;
+  height: 25px;
+  margin-right: 15px;
+  margin-top: 15px;
+
+}
+
+.modal--add{
+  width: 100%;
 }

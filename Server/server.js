@@ -110,24 +110,45 @@ app.post("/addcontact", upload.single('image'), (req,res) => {
 
 
 //Actualizar un contacto
-app.put('/edit/', (req,res) => {
+app.post('/edit/',upload.single('image'), (req,res) => {
     // const {id} =req.params;
+    console.log("BodyUpdate: ",req)
     const {id} = req.body
     const {name} = req.body
     const {phone} = req.body
     const {email} = req.body
     const {adress} = req.body
-    img = req.file.filename;
+    // img = req.file.filename;
     const {id_cont_social} = req.body
     const {id_contact_group} = req.body
     const {id_work} = req.body
-    
-    let SQL ="UPDATE contato SET name = ?, phone = ?, email = ?, adress = ?, pic = ?, id_cont_social = ?, id_contact_group = ?, id_work = ? WHERE id = ?";
-    // console.log(req)
-    db.run(SQL,[name, phone, email, adress, img, id_cont_social, id_contact_group, id_work, id],(err, result) => {
-        if(err) console.log(err);
-        else console.log(result)
-    })
+
+    // console.log("**************file**************: ",file)
+     if(req.file == undefined){
+        let SQLGET = "SELECT * FROM contato WHERE id=?"
+        db.get(SQLGET,[id], (error,result) => {
+            console.log(result)
+            let pic = result.pic;
+            let SQL ="UPDATE contato SET name = ?, phone = ?, email = ?, adress = ?, pic = ?, id_cont_social = ?, id_contact_group = ?, id_work = ? WHERE id = ?";
+            db.run(SQL,[name, phone, email, adress, pic, id_cont_social, id_contact_group, id_work, id],(err, result) => {
+                if(err) console.log(err);
+                else console.log(result)
+            })
+        })
+     }else {
+        let pic = req.file.filename
+        let SQL ="UPDATE contato SET name = ?, phone = ?, email = ?, adress = ?, pic = ?, id_cont_social = ?, id_contact_group = ?, id_work = ? WHERE id = ?";
+            db.run(SQL,[name, phone, email, adress, pic, id_cont_social, id_contact_group, id_work, id],(err, result) => {
+                if(err) console.log(err);
+                else console.log(result)
+            })
+     }
+    // let SQL ="UPDATE contato SET name = ?, phone = ?, email = ?, adress = ?, pic = ?, id_cont_social = ?, id_contact_group = ?, id_work = ? WHERE id = ?";
+    // // console.log(req)
+    // db.run(SQL,[name, phone, email, adress, img, id_cont_social, id_contact_group, id_work, id],(err, result) => {
+    //     if(err) console.log(err);
+    //     else console.log(result)
+    // })
     console.log(id)
     console.log(req.body)
 })
