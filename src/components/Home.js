@@ -68,7 +68,7 @@ export default function Home() {
     
     return (
         <div className="home">
-            <h1> Lista de Conatos</h1>
+            <h1> Lista de Contatos</h1>
             <div className="bar-principal">
                 <div className="containerInput">
                     {/*<form onSubmit = {SearchContact}>*/}
@@ -87,19 +87,8 @@ export default function Home() {
                     {/*</form>*/}
                 </div>
                 <div className="button-add">
-                <ButtonIcon
-                    icon="person_add"
-                    onClick={() => {
-                        handleClickCard()
-                        // navigate("/addcontact")
-                    }}
-                />
-                <ButtonIcon
-                    icon="group_add"
-                    onClick={() => {
-                        navigate("/addgroup")
-                    }}
-                />
+                    <ButtonIcon icon="person_add" onClick={() => { handleClickCard() }} />
+                    <ButtonIcon icon="group_add" onClick={() => { navigate("/addgroup") }} />
                 </div>
             </div>
             <FormAddContact

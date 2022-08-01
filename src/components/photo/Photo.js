@@ -11,7 +11,7 @@ export default function PhotoList(props){
    )
 }
 
-export  function PhotoCard(props){
+export function PhotoCard(props){
    return(
       <>
          <div className="foto--card">
