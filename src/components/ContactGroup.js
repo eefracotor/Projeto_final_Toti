@@ -2,6 +2,7 @@ import React from "react";
 import PhotoList, { PhotoCard } from "./photo/Photo";
 import ButtonIcon from "./buttoms";
 import {useNavigate} from "react-router-dom"
+import { IconCamera } from "./photo/avatar"
 //import Contacto from "./contact";
 
 export default function Contacto(props){
@@ -14,6 +15,7 @@ export default function Contacto(props){
             src = {URL}
             alt = "..."
          />
+         
          <h1>{props.name}</h1>
          <p>{props.descrisption}</p>
       </div>

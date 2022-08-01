@@ -6,6 +6,7 @@ import ButtonIcon from "./buttoms";
 import { IconCamera } from "./photo/avatar"
 
 export default function AddGroup() {
+    //const [open, setOpen] = useState(false);
     const [values, setValues] = useState('');
     const [file, setFile] = useState(null);
     const [fileName, setFileName] = useState("");
@@ -62,6 +63,10 @@ export default function AddGroup() {
         // navigate("/");
     };
    
+    /*const handleClickCard = () =>{
+        setOpen(true)
+    }*/
+
     return(
         <div className="container--form">
         <div className="btn-nav">
@@ -72,17 +77,16 @@ export default function AddGroup() {
         <form className="form--add" encType="multipart/form-data">
             {/* <label>Nome</label> */}
             <div className="container--avatar">
-                    <img className="avatar" src={pathImage} alt="User" />
-                    <label htmlFor="avatar"><IconCamera src="http://localhost:3001/photo-camera.png" />
-                </label>
+                <img className="avatar" src={pathImage} alt="User" />
+                <label htmlFor="avatar"><IconCamera src="http://localhost:3001/photo-camera.png" /></label>
             </div>
-                    <input
-                        id = "avatar" 
-                        type={"file"}
-                        placeholder="avatar"
-                        name="avatar"
-                        onChange={onFileChange}
-                    />
+            <input
+                id = "avatar" 
+                type={"file"}
+                placeholder="avatar"
+                name="avatar"
+                onChange={onFileChange}
+            />
             <input
                 type={"text"}
                 placeholder="Nome"
@@ -98,7 +102,10 @@ export default function AddGroup() {
             />
             
             <ButtonIconF icon = "save" onClick={() => { handleClick() }} />
+            {/*<div className="button-add">
+                <ButtonIcon icon="person_add" onClick={() => { handleClickCard() }} />
                 
+            </div>*/}    
             {/* Salvar</button> */}
         </form>
         </div>

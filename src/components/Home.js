@@ -87,8 +87,8 @@ export default function Home() {
                     {/*</form>*/}
                 </div>
                 <div className="button-add">
-                <ButtonIcon icon="person_add" onClick={() => { handleClickCard() }} />
-                <ButtonIcon icon="group_add" onClick={() => { navigate("/addgroup") }} />
+                    <ButtonIcon icon="person_add" onClick={() => { handleClickCard() }} />
+                    <ButtonIcon icon="group_add" onClick={() => { navigate("/addgroup") }} />
                 </div>
             </div>
             <FormAddContact
