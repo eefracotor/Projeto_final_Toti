@@ -1,16 +1,17 @@
-// /*export default function AddGroup(){
-//     return(
-//         <h1>AddGroup</h1>
-//     )
-// }*/
+/*export default function AddGroup(){
+    return(
+        <h1>AddGroup</h1>
+    )
+}*/
 //import HomeGroup from "./components/HomeGroup";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"
 import Axios from "axios";
-import ButtonIcon, {ButtonIconF} from './buttoms';
+import ButtonIconF from "./buttoms";
+import ButtonIcon from "./buttoms";
 
 
-export default function AddGroup() { 
+export default function AddGroup() {
     const [values, setValues] = useState('');
     const [file, setFile] = useState(null);
     const [fileName, setFileName] = useState("");
@@ -69,7 +70,7 @@ export default function AddGroup() {
    
     return(
         <div className="container--form">
-            <ButtonIconF icon="arrow_forward_ios" onClick={() => { navigate("/homegroup") }} />
+            <ButtonIconF icon="arrow_forward_ios" onClick={() => { navigate("/contactgroup") }} />
             <ButtonIcon icon="arrow_back_ios" onClick={() => { navigate("/") }} />
         <h1>AddGroup</h1>
         <form className="form--add" encType="multipart/form-data">

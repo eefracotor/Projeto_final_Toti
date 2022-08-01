@@ -93,20 +93,21 @@ app.post("/addcontact", upload.single('image'), (req,res) => {
     // console.log(name)
 })
 
-// app.post("/addcontact", upload.single('foto'), (req,res) => {
-//     const {name} = req.body;
-//     const {phone} = req.body;
-//     const {email} = req.body;
-//     const {adress} = req.body;
-    
-//     let SQL ="INSERT INTO contato (name, phone, email, adress, pic, id_cont_social, id_contact_group, id_work) VALUES ( ?,?,?,?,?,?,?,? )";
 
-//     db.run(SQL,[name,phone,email,adress],(err, result) => {
-//         if(err) console.log(err);
-//         else console.log(result)
-//     })
-//     // console.log(name)
-// })
+app.post("/addgroup", upload.single('image'), (req, res) => {
+    const {name} = req.body;
+    const {descrisption} = req.body;
+    
+    req.file == null ? img = "icone_group.jpeg" : img = req.file.fileName;
+
+    res.json({name, descrisption, img})
+    let SQL = "INSERT INTO grupo (name, descrisption) VALUES ( ?, ? )";
+
+    db.run(SQL,[name, descrisption, img], (err, result) => {
+        if(err) console.log(err);
+        else console.log(result)
+    })
+})
 
 
 //Actualizar un contacto
@@ -153,6 +154,7 @@ app.post('/edit/',upload.single('image'), (req,res) => {
     console.log(req.body)
 })
 
+
 //Elominar un contacto
 app.delete("/delete/:id", (req, res) => {
     const {id} = req.params;
@@ -166,6 +168,7 @@ app.delete("/delete/:id", (req, res) => {
     });
   });
 
-app.listen(3001, () => {
+
+  app.listen(3001, () => {
     console.log("Inicializando servidor")
 });
