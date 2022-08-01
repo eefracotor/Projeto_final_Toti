@@ -76,6 +76,9 @@ app.post("/addcontact", upload.single('image'), (req,res) => {
     const {phone} = req.body;
     const {email} = req.body;
     const {adress} = req.body;
+    const {id_cont_social} = req.body;
+    const {id_contact_group} = req.body;
+    const {id_work} = req.body;
     req.file == null ? img = "user.png" : img = req.file.filename;
     // var img = req.file.filename;
     // var img = `'\'http://localhost:3001/${req.file.filename}'\'`;
@@ -83,10 +86,10 @@ app.post("/addcontact", upload.single('image'), (req,res) => {
     
     // res.send("pronto");
     // res.json({name,site})
-    res.json({name, phone, email, adress, img})
+    res.json({name, phone, email, adress, img,id_cont_social,id_contact_group,id_work})
     let SQL ="INSERT INTO contato (name, phone, email, adress, pic, id_cont_social, id_contact_group, id_work) VALUES ( ?,?,?,?,?,?,?,? )";
 
-    db.run(SQL,[name,phone,email,adress,img],(err, result) => {
+    db.run(SQL,[name,phone,email,adress,img,id_cont_social,id_contact_group,id_work],(err, result) => {
         if(err) console.log(err);
         else console.log(result)
     })

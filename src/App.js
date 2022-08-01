@@ -7,9 +7,9 @@ import AddContact from './components/AddContact';
 import EditContact from "./components/EditContact";
 import AddGroup from "./components/AddGroup";
 // import EditGroup from "./EditGroup";
-import ContactGroup from "./components/ContactGroup";
-import AddContactGroup from "./components/AddContactGroup";
-import FormAddContact from "./components/formAddContact";
+// import ContactGroup from "./components/ContactGroup";
+// import AddContactGroup from "./components/AddContactGroup";
+// import FormAddContact from "./components/formAddContact";
 
 function App() {
   return (
@@ -22,9 +22,9 @@ function App() {
           <Route path='/contact/:id' element={<EditContact />} />
           <Route path='/addgroup' element={<AddGroup />} />
           {/* <Route path='/editgroup' element={<EditGroup />} /> */}
-          <Route path='/contactgroup' element={<ContactGroup />} /> 
-          <Route path='/addcontactgroup' element={<AddContactGroup />} /> 
-          <Route path='/formaddcontactgroup' element={<FormAddContact />} /> 
+          {/* <Route path='/contactgroup' element={<ContactGroup />} />  */}
+          {/* <Route path='/addcontactgroup' element={<AddContactGroup />} />  */}
+          {/* <Route path='/formaddcontactgroup' element={<FormAddContact />} />  */}
         </Routes>
       </Router>
     </>

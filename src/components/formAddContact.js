@@ -54,6 +54,9 @@ export default function FormAddContact (props) {
         formData.append('phone', phones);
         formData.append('email', values.email);
         formData.append('adress', values.adress);
+        formData.append('id_cont_social', values.id_cont_social);
+        formData.append('id_contact_group', values.id_contact_group);
+        formData.append('id_work', values.id_work);
         await Axios.post("http://localhost:3001/addcontact", formData, {
             headers: { "Content-Type": "multipart/form-data" }
         }).then((res) => {
