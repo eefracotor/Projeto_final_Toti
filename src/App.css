@@ -320,3 +320,9 @@ margin-left: 25px;
 .modal--add{
   width: 100%;
 }
+.btn-nav{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}

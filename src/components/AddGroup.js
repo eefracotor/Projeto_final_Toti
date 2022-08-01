@@ -1,15 +1,9 @@
-/*export default function AddGroup(){
-    return(
-        <h1>AddGroup</h1>
-    )
-}*/
-//import HomeGroup from "./components/HomeGroup";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"
 import Axios from "axios";
 import ButtonIconF from "./buttoms";
 import ButtonIcon from "./buttoms";
-
+import { IconCamera } from "./photo/avatar"
 
 export default function AddGroup() {
     const [values, setValues] = useState('');
@@ -70,15 +64,20 @@ export default function AddGroup() {
    
     return(
         <div className="container--form">
-            <ButtonIconF icon="arrow_forward_ios" onClick={() => { navigate("/contactgroup") }} />
+        <div className="btn-nav">
             <ButtonIcon icon="arrow_back_ios" onClick={() => { navigate("/") }} />
+            <ButtonIconF icon="arrow_forward_ios" onClick={() => { navigate("/contactgroup") }} />
+        </div>
         <h1>AddGroup</h1>
         <form className="form--add" encType="multipart/form-data">
             {/* <label>Nome</label> */}
             <div className="container--avatar">
                     <img className="avatar" src={pathImage} alt="User" />
+                    <label htmlFor="avatar"><IconCamera src="http://localhost:3001/photo-camera.png" />
+                </label>
             </div>
-                    <input 
+                    <input
+                        id = "avatar" 
                         type={"file"}
                         placeholder="avatar"
                         name="avatar"
