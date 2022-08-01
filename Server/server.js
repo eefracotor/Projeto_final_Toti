@@ -86,6 +86,7 @@ app.post("/addcontact", upload.single('image'), (req,res) => {
     
     // res.send("pronto");
     // res.json({name,site})
+
     res.json({name, phone, email, adress, img, id_cont_social,id_contact_group,id_work})
     let SQL ="INSERT INTO contato (name, phone, email, adress, pic, id_cont_social, id_contact_group, id_work) VALUES ( ?,?,?,?,?,?,?,? )";
 

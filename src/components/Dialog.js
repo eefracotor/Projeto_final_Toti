@@ -9,9 +9,12 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import ButtonIcon from './buttoms';
 import { Icon } from "@mui/material";
-import {IconCamera} from "./photo/avatar"
+import Avatar, {IconCamera} from "./photo/avatar"
+import { useForm } from 'react-hook-form'
+
 
 export default function FormDialog(props) {
+  const { register, handleSubmit, formState: { errors } } = useForm();
   // URL = `http://localhost:3001/${props.pic}`: URL = 'http://localhost:3001/user.png'
   props.pic ?  URL = `http://localhost:3001/${props.pic}` : URL = 'http://localhost:3001/user.png' 
   const [pathImage, setPathImage] = useState(URL);
@@ -77,7 +80,7 @@ export default function FormDialog(props) {
    formData.append('image', file);
    formData.append('id', props.id);
    formData.append('name', editValue.name);
-  //  formData.append('phone', editValue.phone);
+   formData.append('phone', editValue.phone);
    formData.append('email', editValue.email);
    formData.append('adress', editValue.adress);
    formData.append('id_cont_social', editValue.id_cont_social);
@@ -120,7 +123,8 @@ const handleDelete = ()=>{
 
           <div className='contact--modal'>
               <div className="container--avatar">
-                <img className="avatar" src={pathImage} alt="User" />
+                {/* <img className="avatar" src={pathImage} alt="User" /> */}
+                <Avatar src={pathImage} />
                 <label htmlFor="avatar1">
                   <IconCamera 
                     src="http://localhost:3001/photo-camera.png" 
@@ -163,8 +167,20 @@ const handleDelete = ()=>{
                 type="text"
                 fullWidth
                 variant="standard"
+                // {...register("name", {
+                //   required: {
+                //      value: true,
+                //      message: "Campo obrigatorio!"
+                //   },
+                //   pattern: {
+                //      value: /^[a-zA-ZÀ-ÿ\s\W]{3,25}$/,
+                //      message: "O nome debe conter entre 3 e 25 carateres!"
+                //   }
+                // })}
               />
             </div>
+            {/* {errors.name && <span className="error">{errors.name.message}</span>} */}
+
             {/* <div>
               {(props.phone)?.map((phone, index) => (
                     <div key={phone} className="phone--input" >
@@ -205,8 +221,16 @@ const handleDelete = ()=>{
                 type="text"
                 fullWidth
                 variant="standard"
+                // {...register("phone", {
+                //   pattern: {
+                //      value: /^[0-9]+$/,
+                //      message: "Por favor, só ingrese número"
+                //   }
+                // })}
               />
             </div>
+            {errors.phone && <span className="error">{errors.phone.message}</span>}
+
             <div className="textFile">
               <label>
                   <img className="photo-icon-form"
@@ -222,8 +246,16 @@ const handleDelete = ()=>{
                 type="email"
                 fullWidth
                 variant="standard"
+                // {...register("email", {
+                //   pattern: {
+                //      value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+                //      message: "Por favor ingrese o formato correto. Ex: seu@email.com"
+                //   }
+                // })}
               />
             </div>
+            {/* {errors.email && <span className="error">{errors.email.message}</span>} */}
+
             <div className="textFile">
               <label>
                 <img className="photo-icon-form"
@@ -307,9 +339,7 @@ const handleDelete = ()=>{
             />
             <ButtonIcon
                icon = "save"
-               onClick={() => {
-                  handleSaveChange()
-               }}
+               onClick={handleSubmit(handleSaveChange)}
             />
         </DialogActions>
       </Dialog>

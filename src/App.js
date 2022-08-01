@@ -10,7 +10,6 @@ import EditGroup from "./components/EditGroup";
 import ContactGroup from "./components/ContactGroup";
 import AddContactGroup from "./components/AddContactGroup";
 
-
 function App() {
   return (
     <>
