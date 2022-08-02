@@ -47,12 +47,23 @@ app.all("/list", (req,res) => {
         if (err) console.log(err);
         else {
             const teste =JSON.stringify(result)
-            console.log(teste);
+            // console.log(teste);
             res.send(teste);
         }
     })
 })
 
+app.all("/group", (req, res) => {
+    let SQL = "SELECT * FROM grupo";
+    db.all(SQL, (err, result) => {
+        if(err) console.log(err);
+        else{
+            const teste = JSON.stringify(result);
+            // console.log(teste);
+            res.send(teste);
+        }
+    })
+})
 //seleccionar un contacto
 app.get('/contact/:id', (req,res) => {
     const {id} =req.params;

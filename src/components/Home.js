@@ -15,7 +15,7 @@ export default function Home() {
     const URL = "http://localhost:3001/list";
     const [formContacts, setFormContacts] = useState([]); 
     const [pesquisar, setPesquisar] = useState("");
-
+    
     const getContact = async()=>{
       await Axios.get(URL)
       .then(response=>{
@@ -98,13 +98,14 @@ export default function Home() {
             <div className="lista--contact">
                 {typeof contato !== "undefined" && contato.map((contact) => {
                     return (
-                        <Link to={`/contact/${contact.id}`} >
+                        <Link key={contact.id} to={`/contact/${contact.id}`} >
                             <Contacto
                                 key={contact.id}
                                 name={contact.name}
                                 phone={contact.phone}
                                 email={contact.email}
                                 pic={contact.pic}
+                                // className={(contact.id) %2 ?'--n':'--p'}
                             ></Contacto>
                         </Link>
                     )

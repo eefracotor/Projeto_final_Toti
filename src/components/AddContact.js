@@ -6,6 +6,45 @@ import { IconCamera } from "./photo/avatar";
 import FormDialog from "./Dialog";
 import { TextField, Icon } from "@mui/material";
 // import Icon from "react-icon";
+import { useForm } from "../components/TESTE/useForm";
+
+const initialForm = {
+    name: "",
+    email: "",
+    phone: "",
+    // comments : ""
+ };
+
+const validationsForm = (values) => { // VALUES => 
+    let errors = {};
+    let regexName = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/;
+    let regexEmail = /^(\w+[/./-]?){1,}@[a-z]+[/.]\w{2,}$/;
+    let regexPhone = /^.{1,255}$/;
+ 
+    if(!values.name.trim()) { //si el campo esta completamente vacio
+       errors.name = "El campo nombre es requerido";
+    }else if(!regexName.test(values.name.trim())){
+       errors.name = "El campo nombre solo acepta letras y espacios en blanco";
+    }
+ 
+    if(!values.email.trim()) { //si el campo esta completamente vacio
+       errors.email = "El campo email es requerido";
+    }else if(!regexEmail.test(values.email.trim())){
+       errors.email = "El cemail es incorrecto";
+    }
+ 
+    if(!values.phone.trim()) { //si el campo esta completamente vacio
+       errors.phone = "El campo asunto es requerido";
+    }
+ 
+    // if(!form.comments.trim()) { //si el campo esta completamente vacio
+    //    errors.comments = "El campo nombre es requerido";
+    // }else if(!regexComments.test(form.comments.trim())){
+    //    errors.comments = "El campo solo acepta 255  caracteres";
+    // }
+ 
+    return errors;
+ };
 
 export default function AddContact(){
     const [values, setValues] = useState('');
@@ -13,15 +52,11 @@ export default function AddContact(){
     const [file, setFile] = useState(null);
     const [fileName, setFileName] = useState("");
     const [pathImage, setPathImage] = useState('http://localhost:3001/user.png');
-    let navigate = useNavigate()
+    let navigate = useNavigate();
+    const [errors, setErrors] = useState({})
+    
 
-    const handleChange = value => {
-        // console.log(value.target.value)
-        setValues((prevValue)=> ({
-            ...prevValue,
-            [value.target.name]: value.target.value
-        }))
-    }
+    // const {values, errors,loading, response, handleChange, handleBlur, handleSubmit} = useForm(initialForm,validationsForm)
 
     const onFileChange = (e) => {
         setFile(e.target.files[0]);
@@ -38,33 +73,58 @@ export default function AddContact(){
             }
             // setFile(files);
             setFileName(files);
+            // setPicture(file)
             console.log('file: '+ file);
             // console.log('fileName: '+ filesName);
         }else {
             console.log("there was an error")
         }
+    };
+
+    
+     const handleChange = value => {
+        // console.log(value.target.value)
+        setValues((prevValue)=> ({
+            ...prevValue,
+            [value.target.name]: value.target.value
+        }))
     }
+    
+     const handleBlur = (e) => {
+        handleChange(e);
+        setErrors(validationsForm(values));  // PENDIENTE FORM
+     };
 
     const handleClick = async (e) => {
-        // e.preventDefault()
-        const formData = new FormData();
-        formData.append('image', file);
-        formData.append('name', values.name);
-        formData.append('phone', phones);
-        formData.append('email', values.email);
-        formData.append('adress', values.adress);
-        // formData.append("fileName", fileName);
-        await Axios.post("http://localhost:3001/addcontact", formData, {
-            headers: { "Content-Type": "multipart/form-data" },
-            // name: values.name,
-            // phone: values.phone,
-            // email: values.email,
-            // adress: values.adress,
-        }).then((res) => {
-            console.log(res)
-        });
+        // e.preventDefault();
+        setErrors(validationsForm(values));
+
+        if(Object.keys(errors).length === 0){
+            alert("Enviadno formulario!!");
+            const formData = new FormData();
+            formData.append('image', file);
+            formData.append('name', values.name);
+            formData.append('phone', phones);
+            formData.append('email', values.email);
+            formData.append('adress', values.adress);
+            // formData.append("fileName", fileName);
+            await Axios.post("http://localhost:3001/addcontact", formData, {
+                headers: { "Content-Type": "multipart/form-data" },
+                // name: values.name,
+                // phone: values.phone,
+                // email: values.email,
+                // adress: values.adress,
+            }).then((res) => {
+                console.log(res)
+            });
+         }else{
+            return;
+         }
+         
         // navigate("/");
     };
+
+
     const handleAddPhone = (e) => {
         e.preventDefault();
         console.log("activado!");
@@ -81,6 +141,9 @@ export default function AddContact(){
         e.preventDefault();
         setPhones([...phones.filter((_, index) => index != position)])
     }
+    // const {form, errors,loading, response, setPicture, handleChange, handleBlur, handleSubmit} = useForm(initialForm,validationsForm)
+
+
     return(
         <div className="container--form">
             <ButtonIcon
@@ -125,11 +188,15 @@ export default function AddContact(){
                         label="Nome"
                         fullWidth 
                         variant="standard"
-                        defaultValue={null}
+                        // defaultValue={null}
+                        value={values.name}
                         onChange={handleChange}
+                        onBlur={handleBlur}
+                        required
                     />
                 </div>
-                <div className="list--phone"> 
+                {errors.name && <p>{errors.name}</p>}
+                {/* <div className="list--phone"> 
                     <div className="container--phone">
                         {phones.map((phone, index) => (
                             <div key={index} className="phone--input" >
@@ -145,8 +212,10 @@ export default function AddContact(){
                                     type={"text"}
                                     placeholder={`Telefone ${index + 1}`}
                                     name="phone"
-                                    value={phone}
+                                    value={form.phone}
                                     onChange={(e) => handleChangePhone(e, index)}
+                                    // onBlur={handleBlur}
+
                                 />
                                 <ButtonIcon
                                     icon ="highlight_off"
@@ -165,7 +234,29 @@ export default function AddContact(){
                         />
                         <p> Adicionar número de telefone</p>
                     </div>
-                </div>
+                </div> */}
+                <div className="textFile">
+                    <label>
+                        <img className="photo-icon-form"
+                            src="http://localhost:3001/mail.png" 
+                        />
+                    </label>
+                    <TextField
+                        type={"text"}
+                        placeholder="seu@email.com"
+                        name="phone"
+                        margin="dense"
+                        label="E-mail"
+                        fullWidth
+                        variant="standard"
+                        value={values.phone}
+                        // defaultValue={null}
+                        onBlur={handleBlur}
+                        onChange={handleChange}
+                        required
+                    /> 
+                </div> 
+                {errors.phone && <p>{errors.phone}</p>}
                 <div className="textFile">
                     <label>
                         <img className="photo-icon-form"
@@ -180,10 +271,14 @@ export default function AddContact(){
                         label="E-mail"
                         fullWidth
                         variant="standard"
-                        defaultValue={null}
+                        value={values.email}
+                        // defaultValue={null}
+                        onBlur={handleBlur}
                         onChange={handleChange}
+                        required
                     />                    
                 </div>                
+                {errors.email && <p>{errors.email}</p>}
                 <div className="textFile">
                     <label>
                         <img className="photo-icon-form"
@@ -263,6 +358,7 @@ export default function AddContact(){
                 // onClick = {handleClick}
                 onClick={() => {
                     handleClick()
+                    // handleSubmit()
                 }} 
                 />
                 

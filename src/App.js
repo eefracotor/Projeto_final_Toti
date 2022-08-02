@@ -9,6 +9,7 @@ import AddGroup from "./components/AddGroup";
 import EditGroup from "./components/EditGroup";
 import ContactGroup from "./components/ContactGroup";
 import AddContactGroup from "./components/AddContactGroup";
+import TesteForm from "./components/TESTE/resnderTest";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path ="/editgroup" element = {<EditGroup />} />
           <Route path ="/contactgroup" element = {<ContactGroup />} />
           <Route path ="/addcontactgroup" element = {<AddContactGroup />} />
+          <Route path ="/teste" element = {<TesteForm />} /> 
         </Routes>
       </Router>
     </>

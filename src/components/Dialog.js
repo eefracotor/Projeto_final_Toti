@@ -20,10 +20,26 @@ export default function FormDialog(props) {
   const [pathImage, setPathImage] = useState(URL);
   const [fileName, setFileName] = useState("");
   const [file, setFile] = useState();
+  const [grupos, setGrupos] = useState([]);
   const [phones, setPhones] = useState([]);
   
-   let navigate = useNavigate();
-  //  let URL = `http://localhost:3001/${props.id}` 
+  let navigate = useNavigate();
+  let URLs = 'http://localhost:3001/group';
+
+  useEffect(() => {
+    Axios.get(URLs)
+    .then(response =>{
+       setGrupos(response.data)
+    }).catch(error => {
+       console.log(error)
+    });
+  });
+
+  const suppliers = grupos.map((grp) => 
+  <option 
+  value={grp.id}
+  >{grp.name}</option>
+  );
 
 
   const onFileChange = (e) => {
@@ -69,7 +85,8 @@ export default function FormDialog(props) {
       ...props,
       [values.target.id]: values.target.value,
    })
-   };
+   console.log(values.target.value)
+  };
 
   const handleSaveChange = () => {
    let isSave = window.confirm(
@@ -296,16 +313,20 @@ const handleDelete = ()=>{
                     src="http://localhost:3001/people.png" 
                 />
               </label>
-              <TextField
-                margin="dense"
-                id="id_contact_group"
-                label="Grupo"
-                defaultValue={props.id_contact_group}
-                onChange={handleChangeValues}
-                type="text"
-                fullWidth
-                variant="standard"
-              />
+              <select 
+                  name="id_contact_group" 
+                  id="id_contact_group" 
+                  form="addContac" 
+                  className="select--form"
+                  defaultValue={props.id_contact_group}
+                  // options={grupos.map(g => ({label: g.name, value: g.id}))}
+                  onChange={handleChangeValues}
+                  
+               >
+                  <option>Selecione un grupo </option>
+                  {suppliers}
+                  
+               </select>
             </div>
             <div className="textFile">
               <label>

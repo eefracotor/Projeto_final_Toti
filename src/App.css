@@ -54,6 +54,14 @@ button:hover {
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
+.--p{ 
+  background: linear-gradient(to right, rgb(86, 32, 107),rgb(235, 205, 255)); /*: rgb(255, 248, 206), rgb(184, 255, 206), rgb(219, 142, 255);*/
+}
+
+.--n{
+  background: linear-gradient(to right, rgb(32, 107, 107),rgb(162, 253, 253)); /*: rgb(255, 248, 206), rgb(184, 255, 206), rgb(219, 142, 255);*/
+}
+
 .card--list:hover{
   background-color: gray;
   color: rgb(250, 250, 250);
@@ -85,6 +93,7 @@ button:hover {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background: linear-gradient(to right, rgb(32, 107, 107),rgb(162, 253, 253)); /*: rgb(255, 248, 206), rgb(184, 255, 206), rgb(219, 142, 255);*/
   box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
@@ -341,4 +350,22 @@ margin-left: 25px;
   font-size: 1em;
 }
 
+.select--form{
+  margin-top: 20px;
+  display: block;
+  font-size: 17px;
+  width: 100%;
+  height: 50px;
+  line-height: 5;
+  border-radius: 5px;
+  box-shadow: 0 1px 0 1px rgba(173, 173, 173, 0.03);
+}
 
+.select--form:focus {
+  border-color: #aaa;
+  box-shadow: 0 0 1px 3px rgba(59, 153, 252, .7);
+  box-shadow: 0 0 0 3px -moz-mac-focusring;
+  color: #222; 
+  outline: none;
+  text-transform: capitalize;
+}

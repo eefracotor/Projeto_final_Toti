@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import Select from "react-select";
 import {useNavigate} from "react-router-dom"
 import Axios from "axios";
 import ButtonIcon from "./buttoms";
@@ -19,6 +20,19 @@ export default function FormAddContact (props) {
     const [file, setFile] = useState(null);
     const [fileName, setFileName] = useState("");
     const [pathImage, setPathImage] = useState('http://localhost:3001/user.png');
+    const [grupos, setGrupos] = useState([]);
+    const URL = "http://localhost:3001/group"
+
+    // cargar Gupros
+    useEffect(() => {
+      Axios.get(URL)
+      .then(response =>{
+         setGrupos(response.data)
+      }).catch(error => {
+         console.log(error)
+      });
+    });
+
     let navigate = useNavigate()
 
     const handleChange = value => {
@@ -26,6 +40,7 @@ export default function FormAddContact (props) {
             ...prevValue,
             [value.target.name]: value.target.value
         }))
+        console.log(value.target.value)
     }
 
     const onFileChange = (e) => {
@@ -80,6 +95,10 @@ export default function FormAddContact (props) {
         e.preventDefault();
         setPhones([...phones.filter((_, index) => index != position)])
     }
+   //  {typeof grupos !== "undefined" && 
+    const suppliers = grupos.map((grp) => 
+      <option value={grp.id}>{grp.name}</option>
+      )
 
 
    return (
@@ -94,7 +113,7 @@ export default function FormAddContact (props) {
             Criar Contato
          </DialogTitle>
         <DialogContent>
-        <form  encType="multipart/form-data">
+        <form  encType="multipart/form-data" id="addContac">
 
           <div className='contact--modal'>
               <div className="container--avatar">
@@ -243,17 +262,19 @@ export default function FormAddContact (props) {
                         src="http://localhost:3001/people.png" 
                   />
                </label>
-               <TextField
-                  type={"text"}
-                  placeholder="Grupo"
-                  name="id_contact_group"
-                  margin="dense"
-                  label="Grupo"
-                  fullWidth
-                  variant="standard"
-                  defaultValue={null}
+               <select 
+                  name="id_contact_group" 
+                  id="id_contact_group" 
+                  form="addContac" 
+                  className="select--form"
+                  // defaultValue={{label: 'Seleciona um grupo', value:''}}
+                  // options={grupos.map(g => ({label: g.name, value: g.id}))}
                   onChange={handleChange}
-               />
+               >
+                  <option>Selecione un grupo </option>
+                  {suppliers}
+                  
+               </select>
             </div>
             <div className="textFile">
                <label>
