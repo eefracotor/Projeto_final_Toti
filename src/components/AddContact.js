@@ -15,25 +15,25 @@ const initialForm = {
     // comments : ""
  };
 
-const validationsForm = (values) => { // VALUES => 
+const validationsForm = (form) => { // VALUES => 
     let errors = {};
     let regexName = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/;
     let regexEmail = /^(\w+[/./-]?){1,}@[a-z]+[/.]\w{2,}$/;
     let regexPhone = /^.{1,255}$/;
  
-    if(!values.name.trim()) { //si el campo esta completamente vacio
+    if(!form.name.trim()) { //si el campo esta completamente vacio
        errors.name = "El campo nombre es requerido";
-    }else if(!regexName.test(values.name.trim())){
+    }else if(!regexName.test(form.name.trim())){
        errors.name = "El campo nombre solo acepta letras y espacios en blanco";
     }
  
-    if(!values.email.trim()) { //si el campo esta completamente vacio
+    if(!form.email.trim()) { //si el campo esta completamente vacio
        errors.email = "El campo email es requerido";
-    }else if(!regexEmail.test(values.email.trim())){
+    }else if(!regexEmail.test(form.email.trim())){
        errors.email = "El cemail es incorrecto";
     }
  
-    if(!values.phone.trim()) { //si el campo esta completamente vacio
+    if(!form.phone.trim()) { //si el campo esta completamente vacio
        errors.phone = "El campo asunto es requerido";
     }
  
@@ -53,7 +53,7 @@ export default function AddContact(){
     const [fileName, setFileName] = useState("");
     const [pathImage, setPathImage] = useState('http://localhost:3001/user.png');
     let navigate = useNavigate();
-    const [errors, setErrors] = useState({})
+    // const [errors, setErrors] = useState({})
     
 
     // const {values, errors,loading, response, handleChange, handleBlur, handleSubmit} = useForm(initialForm,validationsForm)
@@ -73,7 +73,6 @@ export default function AddContact(){
             }
             // setFile(files);
             setFileName(files);
-            // setPicture(file)
             console.log('file: '+ file);
             // console.log('fileName: '+ filesName);
         }else {
@@ -82,7 +81,7 @@ export default function AddContact(){
     };
 
     
-     const handleChange = value => {
+     const handleChanges = value => {
         // console.log(value.target.value)
         setValues((prevValue)=> ({
             ...prevValue,
@@ -90,21 +89,21 @@ export default function AddContact(){
         }))
     }
     
-     const handleBlur = (e) => {
-        handleChange(e);
-        setErrors(validationsForm(values));  // PENDIENTE FORM
-     };
+    //  const handleBlur = (e) => {
+    //     handleChange(e);
+    //     setErrors(validationsForm(values));  // PENDIENTE FORM
+    //  };
 
     const handleClick = async (e) => {
         // e.preventDefault();
-        setErrors(validationsForm(values));
+        // setErrors(validationsForm(values));
 
         if(Object.keys(errors).length === 0){
             alert("Enviadno formulario!!");
             const formData = new FormData();
             formData.append('image', file);
             formData.append('name', values.name);
-            formData.append('phone', phones);
+            formData.append('phone', values.phone);
             formData.append('email', values.email);
             formData.append('adress', values.adress);
             // formData.append("fileName", fileName);
@@ -141,7 +140,7 @@ export default function AddContact(){
         e.preventDefault();
         setPhones([...phones.filter((_, index) => index != position)])
     }
-    // const {form, errors,loading, response, setPicture, handleChange, handleBlur, handleSubmit} = useForm(initialForm,validationsForm)
+    const {form, errors,loading, response, handleChange, handleBlur, handleSubmit} = useForm(initialForm,validationsForm)
 
 
     return(
@@ -238,15 +237,15 @@ export default function AddContact(){
                 <div className="textFile">
                     <label>
                         <img className="photo-icon-form"
-                            src="http://localhost:3001/mail.png" 
+                            src="http://localhost:3001/telephone.png" 
                         />
                     </label>
                     <TextField
                         type={"text"}
-                        placeholder="seu@email.com"
+                        placeholder="Telefone"
                         name="phone"
                         margin="dense"
-                        label="E-mail"
+                        label="Telefone"
                         fullWidth
                         variant="standard"
                         value={values.phone}
@@ -357,8 +356,8 @@ export default function AddContact(){
                 icon = "save"
                 // onClick = {handleClick}
                 onClick={() => {
-                    handleClick()
-                    // handleSubmit()
+                    // handleClick()
+                    handleSubmit()
                 }} 
                 />
                 
