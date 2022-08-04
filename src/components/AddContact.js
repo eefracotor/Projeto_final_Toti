@@ -6,7 +6,7 @@ import { IconCamera } from "./photo/avatar";
 import FormDialog from "./Dialog";
 import { TextField, Icon } from "@mui/material";
 // import Icon from "react-icon";
-import { useForm } from "../components/TESTE/useForm";
+// import { useForm } from "../components/TESTE/useForm";
 
 const initialForm = {
     name: "",
@@ -76,13 +76,13 @@ export default function AddContact(){
             // setPicture(file)
             console.log('file: '+ file);
             // console.log('fileName: '+ filesName);
-        }else {
+        } else {
             console.log("there was an error")
         }
     };
 
     
-     const handleChange = value => {
+    const handleChange = value => {
         // console.log(value.target.value)
         setValues((prevValue)=> ({
             ...prevValue,
@@ -90,17 +90,17 @@ export default function AddContact(){
         }))
     }
     
-     const handleBlur = (e) => {
+    const handleBlur = (e) => {
         handleChange(e);
         setErrors(validationsForm(values));  // PENDIENTE FORM
-     };
+    };
 
     const handleClick = async (e) => {
         // e.preventDefault();
         setErrors(validationsForm(values));
 
         if(Object.keys(errors).length === 0){
-            alert("Enviadno formulario!!");
+            alert("Enviando formulario!!");
             const formData = new FormData();
             formData.append('image', file);
             formData.append('name', values.name);
