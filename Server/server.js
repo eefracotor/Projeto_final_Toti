@@ -5,6 +5,7 @@ const cors = require("cors");
 const multer = require('multer');
 const path = require("path");
 const bodyParser = require('body-parser');
+const { useParams } = require("react-router-dom");
 
 
 app.use(cors());
@@ -126,18 +127,19 @@ app.post("/addgroup", upload.single('image'), (req, res) => {
 
 
 //Actualizar un contacto
-app.post('/edit/',upload.single('image'), (req,res) => {
+app.post('edit/photo',upload.single('image'), (req,res) => {
+    // let id = useParams()
     // const {id} =req.params;
     console.log("BodyUpdate: ",req)
-    const {id} = req.body
-    const {name} = req.body
-    const {phone} = req.body
-    const {email} = req.body
-    const {adress} = req.body
+    // const {id} = req.body
+    // const {name} = req.body
+    // const {phone} = req.body
+    // const {email} = req.body
+    // const {adress} = req.body
     // img = req.file.filename;
-    const {id_cont_social} = req.body
-    const {id_contact_group} = req.body
-    const {id_work} = req.body
+    // const {id_cont_social} = req.body
+    // const {id_contact_group} = req.body
+    // const {id_work} = req.body
 
     // console.log("**************file**************: ",file)
      if(req.file == undefined){
@@ -145,16 +147,16 @@ app.post('/edit/',upload.single('image'), (req,res) => {
         db.get(SQLGET,[id], (error,result) => {
             console.log(result)
             let pic = result.pic;
-            let SQL ="UPDATE contato SET name = ?, phone = ?, email = ?, adress = ?, pic = ?, id_cont_social = ?, id_contact_group = ?, id_work = ? WHERE id = ?";
-            db.run(SQL,[name, phone, email, adress, pic, id_cont_social, id_contact_group, id_work, id],(err, result) => {
+            let SQL ="UPDATE contato SET pic = ? WHERE id = ?";
+            db.run(SQL,[pic,id],(err, result) => {
                 if(err) console.log(err);
                 else console.log(result)
             })
         })
      }else {
         let pic = req.file.filename
-        let SQL ="UPDATE contato SET name = ?, phone = ?, email = ?, adress = ?, pic = ?, id_cont_social = ?, id_contact_group = ?, id_work = ? WHERE id = ?";
-            db.run(SQL,[name, phone, email, adress, pic, id_cont_social, id_contact_group, id_work, id],(err, result) => {
+        let SQL ="UPDATE contato SET pic = ? WHERE id = ?";
+        db.run(SQL,[pic,id],(err, result) => {
                 if(err) console.log(err);
                 else console.log(result)
             })
@@ -165,6 +167,31 @@ app.post('/edit/',upload.single('image'), (req,res) => {
     //     if(err) console.log(err);
     //     else console.log(result)
     // })
+    console.log(id)
+    console.log(req.body)
+})
+
+app.put('/edit/:id', (req,res) => {
+    let id = useParams()
+    // const {id} =req.params;
+    console.log("BodyUpdate: ",req)
+    // const {id} = req.body
+    const {name} = req.body
+    const {phone} = req.body
+    const {email} = req.body
+    const {adress} = req.body
+    const {id_cont_social} = req.body
+    const {id_contact_group} = req.body
+    const {id_work} = req.body
+
+    // console.log("**************file**************: ",file)
+     
+    let SQL ="UPDATE contato SET name = ?, phone = ?, email = ?, adress = ?, id_cont_social = ?, id_contact_group = ?, id_work = ? WHERE id = ?";
+    // console.log(req)
+    db.run(SQL,[name, phone, email, adress, id_cont_social, id_contact_group, id_work, id],(err, result) => {
+        if(err) console.log(err);
+        else console.log(result)
+    })
     console.log(id)
     console.log(req.body)
 })

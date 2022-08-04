@@ -34,7 +34,7 @@ export default function FormDialog(props) {
        console.log(error)
     });
   });
-
+  
   const suppliers = grupos.map((grp) => 
   <option 
   value={grp.id}
@@ -93,6 +93,7 @@ export default function FormDialog(props) {
       "Desea guardar los cambios realizados?"
    )
    
+   if(isSave) {
    const formData = new FormData();
    formData.append('image', file);
    formData.append('id', props.id);
@@ -103,7 +104,6 @@ export default function FormDialog(props) {
    formData.append('id_cont_social', editValue.id_cont_social);
    formData.append('id_contact_group', editValue.id_contact_group);
    formData.append('id_work', editValue.id_work);
-   if(isSave) {
       Axios.post('http://localhost:3001/edit', formData, {
         headers: { "Content-Type": "multipart/form-data" }        
       }).then((res) => {
@@ -179,6 +179,7 @@ const handleDelete = ()=>{
                 margin="dense"
                 id="name"
                 label="Nome"
+                name="name"
                 defaultValue={props.name}
                 onChange={handleChangeValues}
                 type="text"
@@ -232,6 +233,7 @@ const handleDelete = ()=>{
               <TextField
                 margin="dense"
                 id="phone"
+                name="phone"
                 label="Telefone"
                 defaultValue={props.phone}
                 onChange={handleChangeValues}
@@ -246,7 +248,7 @@ const handleDelete = ()=>{
                 // })}
               />
             </div>
-            {errors.phone && <span className="error">{errors.phone.message}</span>}
+            {/* {errors.phone && <span className="error">{errors.phone.message}</span>} */}
 
             <div className="textFile">
               <label>
@@ -257,6 +259,7 @@ const handleDelete = ()=>{
               <TextField
                 margin="dense"
                 id="email"
+                name="email"
                 label="Email"
                 defaultValue={props.email}
                 onChange={handleChangeValues}
@@ -282,6 +285,7 @@ const handleDelete = ()=>{
               <TextField
                 margin="dense"
                 id="adress"
+                name="adress"
                 label="Endereço"
                 defaultValue={props.adress}
                 onChange={handleChangeValues}
@@ -299,6 +303,7 @@ const handleDelete = ()=>{
                 <TextField
                   margin="dense"
                   id="id_cont_social"
+                  name="id_cont_social"
                   defaultValue={props.id_cont_social}
                   onChange={handleChangeValues}
                   label="Redes"
@@ -316,6 +321,7 @@ const handleDelete = ()=>{
               <select 
                   name="id_contact_group" 
                   id="id_contact_group" 
+                  // name="id_contact_group" 
                   form="addContac" 
                   className="select--form"
                   defaultValue={props.id_contact_group}
@@ -337,6 +343,7 @@ const handleDelete = ()=>{
               <TextField
                 margin="dense"
                 id="id_work"
+                name="id_work"
                 label="Trabalho"
                 defaultValue={props.id_work}
                 onChange={handleChangeValues}
