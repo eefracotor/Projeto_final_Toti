@@ -11,7 +11,7 @@ import ContactGroup from "./components/ContactGroup";
 import AddContactGroup from "./components/AddContactGroup";
 import Groups from "./components/Groups";
 import HomeContact from "./components/HomeContact";
-//import TesteForm from "./components/TESTE/resnderTest";
+import HomeGroup from "./components/HomeGroup";
 
 function App() {
   return (
@@ -23,12 +23,11 @@ function App() {
           <Route path ="/search" element = {<Search />} />
           <Route path ='/addcontact' element = {<AddContact />} />
           <Route path ='/contact/:id' element = {<EditContact />} />
-          <Route path ='/group' element = {<Groups />} />
+          <Route path ='/group' element = {<HomeGroup />} />
           <Route path ="/addgroup" element = {<AddGroup />} />
           <Route path ="/editgroup/:id" element = {<EditGroup />} />
           <Route path ="/contactgroup" element = {<ContactGroup />} />
           <Route path ="/addcontactgroup" element = {<AddContactGroup />} />
-          {/*<Route path ="/teste" element = {<TesteForm />} />*/} 
         </Routes>
       </Router>
     </>

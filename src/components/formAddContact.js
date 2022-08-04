@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Select from "react-select";
 import {useNavigate} from "react-router-dom"
 import Axios from "axios";
 import ButtonIcon from "./buttoms";
@@ -62,49 +61,49 @@ export default function FormAddContact (props) {
         }
     }
 
-   //  const handleClick = async (e) => {
-   //      const formData = new FormData();
-   //      formData.append('image', file);
-   //      formData.append('name', values.name);
-   //      formData.append('phone', values.phone);
-   //      formData.append('email', values.email);
-   //      formData.append('adress', values.adress);
-   //      formData.append('id_cont_social', values.id_cont_social);
-   //      formData.append('id_contact_group', values.id_contact_group);
-   //      formData.append('id_work', values.id_work);
-   //      await Axios.post("http://localhost:3001/addcontact", formData, {
-   //          headers: { "Content-Type": "multipart/form-data" }
-   //      }).then((res) => {
-   //          console.log(res)
-   //      });
-   //      navigate("/");
-   //      handleClose();
-   //  };
+    const handleClick = async (e) => {
+        const formData = new FormData();
+        formData.append('image', file);
+        formData.append('name', values.name);
+        formData.append('phone', values.phone);
+        formData.append('email', values.email);
+        formData.append('adress', values.adress);
+        formData.append('id_cont_social', values.id_cont_social);
+        formData.append('id_contact_group', values.id_contact_group);
+        formData.append('id_work', values.id_work);
+        await Axios.post("http://localhost:3001/addcontact", formData, {
+            headers: { "Content-Type": "multipart/form-data" }
+        }).then((res) => {
+            console.log(res)
+        });
+        navigate("/");
+        handleClose();
+    };
 
 
-   const handleClick = async (e) => {
+//    const handleClick = async (e) => {
 
-      await Axios.post("http://localhost:3001/addcontact",{
-         name: values.name,
-         phone: values.phone,
-         email: values.email,
-         adress: values.adress,
-      }).then((res) => {
-          console.log(res)
-      });
+//       await Axios.post("http://localhost:3001/addcontact",{
+//          name: values.name,
+//          phone: values.phone,
+//          email: values.email,
+//          adress: values.adress,
+//       }).then((res) => {
+//           console.log(res)
+//       });
 
-      const formData = new FormData();
-      formData.append('image', file);
-      await Axios.post("http://localhost:3001/add-pic-contact", formData, {
-          headers: { "Content-Type": "multipart/form-data" }
-      }).then((res) => {
-          console.log(res)
-      });
+//       const formData = new FormData();
+//       formData.append('image', file);
+//       await Axios.post("http://localhost:3001/add-pic-contact", formData, {
+//           headers: { "Content-Type": "multipart/form-data" }
+//       }).then((res) => {
+//           console.log(res)
+//       });
 
       
-      navigate("/");
-      handleClose();
-  };
+//       navigate("/");
+//       handleClose();
+//   };
 
 
 
@@ -126,7 +125,6 @@ export default function FormAddContact (props) {
         e.preventDefault();
         setPhones([...phones.filter((_, index) => index != position)])
     }
-   //  {typeof grupos !== "undefined" && 
     const suppliers = grupos.map((grp) => 
       <option key={grp.id} value={grp.id}>{grp.name}</option>
       )
@@ -251,24 +249,6 @@ export default function FormAddContact (props) {
             <div className="textFile">
                <label>
                   <img className="photo-icon-form"
-                        src="http://localhost:3001/photo-camera.png" 
-                  />
-               </label>
-               <TextField
-                  type={"text"}
-                  placeholder="Redes social"
-                  name="id_cont_social"
-                  margin="dense"
-                  label="Social Media"
-                  fullWidth
-                  variant="standard"
-                  defaultValue={null}
-                  onChange={handleChange}
-               />
-            </div>
-            <div className="textFile">
-               <label>
-                  <img className="photo-icon-form"
                         src="http://localhost:3001/people.png" 
                   />
                </label>
@@ -277,8 +257,6 @@ export default function FormAddContact (props) {
                   id="id_contact_group" 
                   form="addContac" 
                   className="select--form"
-                  // defaultValue={{label: 'Seleciona um grupo', value:''}}
-                  // options={grupos.map(g => ({label: g.name, value: g.id}))}
                   onChange={handleChange}
                >
                   <option>Selecione un grupo </option>
@@ -290,6 +268,24 @@ export default function FormAddContact (props) {
                <label>
                   <img className="photo-icon-form"
                         src="http://localhost:3001/suitcase.png" 
+                  />
+               </label>
+               <TextField
+                  type={"text"}
+                  placeholder="Empresa"
+                  name="id_cont_social"
+                  margin="dense"
+                  label="Empresa"
+                  fullWidth
+                  variant="standard"
+                  defaultValue={null}
+                  onChange={handleChange}
+               />
+            </div>
+            <div className="textFile">
+               <label>
+                  <img className="photo-icon-form"
+                        src="http://localhost:3001/job-description.png" 
                   />
                </label>
                <TextField
@@ -311,12 +307,6 @@ export default function FormAddContact (props) {
                icon = "cancel"
                onClick={handleClose}
             /> 
-            {/* <ButtonIcon
-               icon = "delete"
-               onClick={()=>{
-                  // handleDelete()
-               }}
-            /> */}
             <ButtonIcon
                icon = "save"
                onClick={() => {

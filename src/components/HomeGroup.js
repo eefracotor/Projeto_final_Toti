@@ -6,6 +6,7 @@ import ContactGroup from "./ContactGroup.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { PropaneSharp } from "@mui/icons-material";
 import FormAddContact from "./formAddContact";
+import { Grupo } from "./contact";
 
 
 
@@ -68,7 +69,7 @@ export default function HomeGroup() {
     
     return (
         <div className="home">
-            <h1> Lista de Contatos</h1>
+            <h1> Lista de Grupos</h1>
             <div className="bar-principal">
                 <div className="containerInput">
                     {/*<form onSubmit = {SearchContact}>*/}
@@ -99,13 +100,12 @@ export default function HomeGroup() {
             <div className="lista--contact">
                 {typeof contato !== "undefined" && contato.map((contactgroup) => {
                     return (
-                        <Link key={contactgroup.id} to={`/contactgroup/${contactgroup.id}`} >
-                            <ContactGroup
+                        <Link key={contactgroup.id} to={`/editgroup/${contactgroup.id}`} >
+                            <Grupo
                                 key={contactgroup.id}
                                 name={contactgroup.name}
                                 descrisption={contactgroup.descrisption}
-                                pic={contactgroup.pic}
-                                // className={(contact.id) %2 ?'--n':'--p'}
+                                img={contactgroup.img}
                             />
                         </Link>
                     )

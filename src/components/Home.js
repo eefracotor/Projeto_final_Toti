@@ -1,7 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import HomeContact from "./HomeContact";
-import HomeGroup from "./HomeGroup";
 
 export default function Home() {
    return(
@@ -9,13 +7,11 @@ export default function Home() {
          <div className="select">
             <Link to={"/contact"} >
                <p>Contactos</p>
-            {/* <HomeContact /> */}
             </Link>
          </div>
          <div className="select">
             <Link to={"/group"}>
                <p>Grupos</p>
-            {/* <HomeGroup /> */}
             </Link>
          </div>
       </div>

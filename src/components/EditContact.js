@@ -63,13 +63,14 @@ export default function EditContact(){
     //  console.log(contato)  
     return(
         <div className="container-card">
-            <div>
+            <div className="btn--group--contact">
                 <ButtonIcon 
                     icon="arrow_back_ios"
                     onClick={() => {
-                        navigate("/")
+                        navigate("/contact")
                     }}
                 />
+                <ButtonIcon icon="home" onClick={() => { navigate("/") }} />
             </div>
             <FormDialog //modal
                 open={open} 

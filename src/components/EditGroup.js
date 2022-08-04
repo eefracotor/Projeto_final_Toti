@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import Axios from "axios";
-import { Card, Grupo, ListContactGroup } from "./contact";
+import { Card, Grupo, GrupoCard, ListContactGroup } from "./contact";
 import ButtonIcon from "./buttoms";
 import FormDialog from "./Dialog"; //modal
 import GroupDialog from "./GroupDialog";
@@ -78,13 +78,15 @@ export default function EditGroup(){
         return(
         <div>
             <div className="container-card">
-                <div>
+                <div className="btn--group--contact">
                     <ButtonIcon 
                         icon="arrow_back_ios"
                         onClick={() => {
                             navigate("/group")
                         }}
                     />
+                    <ButtonIcon icon="home" onClick={() => { navigate("/") }} />
+
                 </div>
                 <GroupDialog //modal
                     open={open} 
@@ -95,7 +97,7 @@ export default function EditGroup(){
                     descrisption={grupos.descrisption}
                 />
                 
-                <Grupo 
+                <GrupoCard 
                     key={grupos.id}
                     name={grupos.name}
                     descrisption={grupos.descrisption}

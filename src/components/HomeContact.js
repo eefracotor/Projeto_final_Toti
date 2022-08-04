@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom"
 import ButtonIcon from "./buttoms";
 import Contacto from "./contact";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { PropaneSharp } from "@mui/icons-material";
 import FormAddContact from "./formAddContact";
 
 
@@ -36,7 +35,6 @@ export default function HomeContact() {
     const filtrar=(terminaPesquisa)=>{
       var resultadosBusca = formContacts.filter((elemento)=>{
         if(elemento.name.toString().toLowerCase().includes(terminaPesquisa.toLowerCase())
-        // || elemento.phone.toString().toLowerCase().includes(terminaPesquisa.toLowerCase())    
         ){
           return elemento;  
         }
@@ -71,20 +69,14 @@ export default function HomeContact() {
             <h1> Lista de Contatos</h1>
             <div className="bar-principal">
                 <div className="containerInput">
-                    {/*<form onSubmit = {SearchContact}>*/}
-                        {/*<h4>Pesquise o nome de um contato</h4>*/}
-                        <input
-                            className="form-control inputPesquisar"
-                            type={"text"}
-                            placeholder = "Pesquise um contato..."
-                            //name = "name"
-                            value={pesquisar}
-                            onChange = {handleChange}
-                        />
-                        {/* <ButtonIcon icon="search" /> */}
-                            {/*<FontAwesomeIcon icon={faSearch} />*/}
-                                    
-                    {/*</form>*/}
+                    <input
+                        className="form-control inputPesquisar"
+                        type={"text"}
+                        placeholder = "Pesquise um contato..."
+                        //name = "name"
+                        value={pesquisar}
+                        onChange = {handleChange}
+                    />                      
                 </div>
                 <div className="button-add">
                     <ButtonIcon icon="home" onClick={() => { navigate("/") }} />
@@ -106,7 +98,6 @@ export default function HomeContact() {
                                 phone={contact.phone}
                                 email={contact.email}
                                 pic={contact.pic}
-                                // className={(contact.id) %2 ?'--n':'--p'}
                             ></Contacto>
                         </Link>
                     )

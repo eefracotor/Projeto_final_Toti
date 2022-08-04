@@ -66,14 +66,24 @@ button:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 90%;
+  width: 70%;
   height: 100px;
   margin-top: 15px;
   margin-bottom: 15px;border-radius: 25px;
+  background-color: #eee;
 }
 
+.card--list--contact--group h1{
+  font-size: 1.5rem;
+  margin-left: 15px;
+  text-transform: capitalize;
+}
 .--p{ 
   background: linear-gradient(to right, rgb(86, 32, 107),rgb(235, 205, 255)); /*: rgb(255, 248, 206), rgb(184, 255, 206), rgb(219, 142, 255);*/
+}
+
+.--p:hover{ 
+  background: linear-gradient(to right, rgb(235, 205, 255),rgb(86, 32, 107)); /*: rgb(255, 248, 206), rgb(184, 255, 206), rgb(219, 142, 255);*/
 }
 
 .--n{
@@ -114,6 +124,30 @@ button:hover {
   background: linear-gradient(to right, rgb(32, 107, 107),rgb(162, 253, 253)); /*: rgb(255, 248, 206), rgb(184, 255, 206), rgb(219, 142, 255);*/
   box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
+
+.card--group{
+  margin: auto;
+  margin-top: 100px;
+  margin-bottom: 15px;
+  width: 75%;
+  height: auto;
+  /* border: solid 1px; */
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to right, rgb(32, 107, 107),rgb(162, 253, 253)); /*: rgb(255, 248, 206), rgb(184, 255, 206), rgb(219, 142, 255);*/
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}
+
+.card--group h1{
+  font-size: 2rem;
+}
+
+/* .card--group:hover{
+  color: rgb(219, 219, 219);
+} */
 
 .card--contact h1 {
   max-width: fit-content;
@@ -423,4 +457,14 @@ margin-left: 25px;
   align-items: center;
   box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
   font-size: 2.5rem;
+}
+
+.btn--group--contact {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 80%;
+  /* background-color: aqua; */
+  /* position: absolute; */
+  margin-top: 5vh;
 }

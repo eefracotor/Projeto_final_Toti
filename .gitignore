@@ -5,6 +5,7 @@
 /.pnp
 .pnp.js
 src/components/TESTE
+src/components/AddContact
 Server/BD.db
 
 # testing

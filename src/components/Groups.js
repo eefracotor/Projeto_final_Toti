@@ -36,7 +36,6 @@ export default function Groups() {
     const filtrar=(terminaPesquisa)=>{
       var resultadosBusca = formContacts.filter((elemento)=>{
         if(elemento.name.toString().toLowerCase().includes(terminaPesquisa.toLowerCase())
-        // || elemento.phone.toString().toLowerCase().includes(terminaPesquisa.toLowerCase())    
         ){
           return elemento;  
         }
@@ -71,20 +70,13 @@ export default function Groups() {
             <h1> Lista de Gupos</h1>
             <div className="bar-principal">
                 <div className="containerInput">
-                    {/*<form onSubmit = {SearchContact}>*/}
-                        {/*<h4>Pesquise o nome de um contato</h4>*/}
-                        <input
-                            className="form-control inputPesquisar"
-                            type={"text"}
-                            placeholder = "Pesquise um grupo..."
-                            //name = "name"
-                            value={pesquisar}
-                            onChange = {handleChange}
-                        />
-                        {/* <ButtonIcon icon="search" /> */}
-                            {/*<FontAwesomeIcon icon={faSearch} />*/}
-                                    
-                    {/*</form>*/}
+                    <input
+                        className="form-control inputPesquisar"
+                        type={"text"}
+                        placeholder = "Pesquise um grupo..."
+                        value={pesquisar}
+                        onChange = {handleChange}
+                    />
                 </div>
                 <div className="button-add">
                     <ButtonIcon icon="home" onClick={() => { navigate("/") }} />

@@ -1,21 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom"
 import Axios from "axios";
-// import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import ButtonIcon from './buttoms';
-import { Icon } from "@mui/material";
 import Avatar, {IconCamera} from "./photo/avatar"
 import { useForm } from 'react-hook-form'
 
 
 export default function FormDialog(props) {
    const { register, handleSubmit, formState: { errors } } = useForm();
-  // URL = `http://localhost:3001/${props.pic}`: URL = 'http://localhost:3001/user.png'
   props.pic ?  URL = `http://localhost:3001/${props.pic}` : URL = 'http://localhost:3001/user.png' 
   const [pathImage, setPathImage] = useState(URL);
   const [fileName, setFileName] = useState("");
@@ -46,7 +43,6 @@ export default function FormDialog(props) {
     setFile(e.target.files[0]);
     if(e.target.files && e.target.files.length > 0) {
         const files = e.target.files[0];
-        // const filesName = e.target.files[0].name;
         if(files.type.includes('image')){
             const reader = new FileReader()
             reader.readAsDataURL(files)
@@ -57,9 +53,7 @@ export default function FormDialog(props) {
         }
         setFile(files);
         setFileName(files);
-        // handleChangeValues(props);
         console.log('file: '+ file);
-        // console.log('fileName: '+ filesName);
     }else {
         console.log("there was an error")
     }
@@ -74,7 +68,6 @@ export default function FormDialog(props) {
       phone: props.phone,
       email: props.email,
       adress: props.adress,
-      // pic: props.pic,
       id_cont_social:props.id_cont_social,
       id_contact_group: props.id_contact_group,
       id_work:  props.id_work,
@@ -97,32 +90,19 @@ export default function FormDialog(props) {
    const formData = new FormData();
    formData.append('image', file);
    formData.append('id', props.id);
-  //  formData.append('name', editValue.name);
-  //  formData.append('phone', editValue.phone);
-  //  formData.append('email', editValue.email);
-  //  formData.append('adress', editValue.adress);
-  //  formData.append('id_cont_social', editValue.id_cont_social);
-  //  formData.append('id_contact_group', editValue.id_contact_group);
-  //  formData.append('id_work', editValue.id_work);
+   formData.append('name', editValue.name);
+   formData.append('phone', editValue.phone);
+   formData.append('email', editValue.email);
+   formData.append('adress', editValue.adress);
+   formData.append('id_cont_social', editValue.id_cont_social);
+   formData.append('id_contact_group', editValue.id_contact_group);
+   formData.append('id_work', editValue.id_work);
       Axios.post('http://localhost:3001/edit', formData, {
         headers: { "Content-Type": "multipart/form-data" }        
       }).then((res) => {
         console.log(res)
     });
-
-    Axios.put('http://localhost:3001/edit/:id', formData, {
-        // headers: { "Content-Type": "multipart/form-data" }
-        name: editValue.name,
-        phone: editValue.phone,
-        email: editValue.email,
-        adress: editValue.adress,        
-        id_cont_social: editValue.id_cont_social,        
-        id_contact_group: editValue.id_contact_group,        
-        id_work: editValue.id_work,        
-      }).then((res) => {
-        console.log(res)
-    });
-      navigate("/");
+      navigate("/contact");
    }
 };
 
@@ -135,8 +115,6 @@ const handleDelete = ()=>{
        navigate("/")
    }
 }
-// setPhones(props.phone)
-// console.log("telefonos ",props)
   return (
     <div>
       <Dialog 
@@ -153,7 +131,6 @@ const handleDelete = ()=>{
 
           <div className='contact--modal'>
               <div className="container--avatar">
-                {/* <img className="avatar" src={pathImage} alt="User" /> */}
                 <Avatar src={pathImage} />
                 <label htmlFor="avatar1">
                   <IconCamera 
@@ -254,24 +231,7 @@ const handleDelete = ()=>{
                 variant="standard"
               />
             </div>
-            <div className="textFile">
-                <label>
-                  <img className="photo-icon-form"
-                        src="http://localhost:3001/photo-camera.png" 
-                  />
-                </label>
-                <TextField
-                  margin="dense"
-                  id="id_cont_social"
-                  name="id_cont_social"
-                  defaultValue={props.id_cont_social}
-                  onChange={handleChangeValues}
-                  label="Redes"
-                  type="text"
-                  fullWidth
-                  variant="standard"
-                />
-            </div>
+            
             <div className="textFile">
               <label>
                 <img className="photo-icon-form"
@@ -281,11 +241,9 @@ const handleDelete = ()=>{
               <select 
                   name="id_contact_group" 
                   id="id_contact_group" 
-                  // name="id_contact_group" 
                   form="addContac" 
                   className="select--form"
                   defaultValue={props.id_contact_group}
-                  // options={grupos.map(g => ({label: g.name, value: g.id}))}
                   onChange={handleChangeValues}
                   
                >
@@ -294,17 +252,37 @@ const handleDelete = ()=>{
                   
                </select>
             </div>
+
+            <div className="textFile">
+                <label>
+                  <img className="photo-icon-form"
+                        src="http://localhost:3001/suitcase.png" 
+                  />
+                </label>
+                <TextField
+                  margin="dense"
+                  id="id_cont_social"
+                  name="id_cont_social"
+                  defaultValue={props.id_cont_social}
+                  onChange={handleChangeValues}
+                  label="Empresa"
+                  type="text"
+                  fullWidth
+                  variant="standard"
+                />
+            </div>
+
             <div className="textFile">
               <label>
                 <img className="photo-icon-form"
-                    src="http://localhost:3001/suitcase.png" 
+                    src="http://localhost:3001/job-description.png" 
                 />
               </label>
               <TextField
                 margin="dense"
                 id="id_work"
                 name="id_work"
-                label="Trabalho"
+                label="Cargo"
                 defaultValue={props.id_work}
                 onChange={handleChangeValues}
                 type="text"
