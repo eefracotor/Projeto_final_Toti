@@ -13,6 +13,7 @@ export default function EditContact(){
     let navigate = useNavigate()
     
     const [contato, setContato] = useState([]);
+    const [grupo, setGrupo] = useState('');
     const [open, setOpen] = useState(false); //modal
     console.log(contato);
     useEffect(() => {
@@ -21,6 +22,28 @@ export default function EditContact(){
             console.log(response);
             setContato(response.data);
         });
+
+        // Axios.get(`http://localhost:3001/group/${contato.id_contact_group}`)
+        // .then((response) => {
+        //     console.log("grupo: ",response.data);
+        //     setGrupo(response.data);
+        // });
+
+    }, [id]);
+
+    useEffect(() => {
+        // Axios.get(URL)
+        // .then((response) => {
+        //     console.log(response);
+        //     setContato(response.data);
+        // });
+
+        Axios.get(`http://localhost:3001/group/${contato.id_contact_group}`)
+        .then((response) => {
+            console.log("grupo: ",response.data);
+            setGrupo(response.data);
+        });
+
     }, [id]);
 
     const handleClickCard = () =>{ //modal
@@ -72,7 +95,7 @@ export default function EditContact(){
                 adress={contato.adress}
                 pic={contato.pic}
                 id_cont_social={contato.id_cont_social}
-                id_contact_group={contato.id_contact_group}
+                id_contact_group={grupo.name}
                 id_work={contato.id_work}
                 
             />

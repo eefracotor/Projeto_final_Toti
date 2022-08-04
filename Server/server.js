@@ -54,6 +54,20 @@ app.all("/list", (req,res) => {
     })
 })
 
+// lista de grupos 
+app.all("/list-group", (req,res) => {
+    let SQL = "SELECT * FROM grupo";
+    db.all(SQL, (err, result) => {
+        if (err) console.log(err);
+        else {
+            const teste =JSON.stringify(result)
+            // console.log(teste);
+            res.send(teste);
+        }
+    })
+})
+
+
 app.all("/group", (req, res) => {
     let SQL = "SELECT * FROM grupo";
     db.all(SQL, (err, result) => {
@@ -70,6 +84,34 @@ app.get('/contact/:id', (req,res) => {
     const {id} =req.params;
     let SQL = 'SELECT * FROM contato WHERE id = ?';
     db.get(SQL, [id], (err, result) => {
+        if (err) console.log(err);
+        else {
+            const teste =JSON.stringify(result)
+            console.log(teste);
+            res.send(teste);
+        }
+    })
+})
+
+//seleccionar un grupo
+app.get('/group/:id', (req,res) => {
+    const {id} =req.params;
+    let SQL = 'SELECT * FROM grupo WHERE id = ?';
+    db.get(SQL, [id], (err, result) => {
+        if (err) console.log(err);
+        else {
+            const teste =JSON.stringify(result)
+            console.log(teste);
+            res.send(teste);
+        }
+    })
+})
+
+//seleccionar contactos de un grupo
+app.all('/groupcontact/:id', (req,res) => {
+    const {id} =req.params;
+        let SQL = `SELECT * FROM contato WHERE id_contact_group = ?`;
+    db.all(SQL, [id], (err, result) => {
         if (err) console.log(err);
         else {
             const teste =JSON.stringify(result)
@@ -99,13 +141,40 @@ app.post("/addcontact", upload.single('image'), (req,res) => {
     // res.send("pronto");
     // res.json({name,site})
 
-    res.json({name, phone, email, adress, img, id_cont_social,id_contact_group,id_work})
+    res.json({name, phone, email, adress,img, id_cont_social,id_contact_group,id_work})
     let SQL ="INSERT INTO contato (name, phone, email, adress, pic, id_cont_social, id_contact_group, id_work) VALUES ( ?,?,?,?,?,?,?,? )";
 
     db.run(SQL,[name,phone,email,adress,img,id_cont_social,id_contact_group,id_work],(err, result) => {
         if(err) console.log(err);
         else console.log(result)
     })
+
+    // app.delete("/delete/:id", (req, res) => {
+        // const {id} = req.params;
+        let SQL1 = "(SELECT MAX(id) FROM contato)-1";
+        let SQL2 = `DELETE FROM contato WHERE id = ${SQL1}`;
+        db.run(SQL2, [SQL1], (err, result) => {
+          if (err) {
+            console.log(err);
+          } else {
+            res.send(result);
+          }
+        });
+    //   });
+
+    // let SQLP = "SELECT MAX(id) FROM contato";
+    // db.get(SQLP,(err,result) => {
+    //     if(err) console.log(err);
+    //     else{
+    //         console.log("result add img: ",result)
+    //         let SQLI =`UPDATE contato SET pic = ? WHERE id = ${SQLP}`;
+    //         res.json({img})
+    //         db.post(SQLI,[img,id],(err,result) =>{
+    //             if(err) console.log(err);
+    //     else console.log(result)
+    //         })
+    //     }
+    // })
     // console.log(name)
 })
 
@@ -113,11 +182,11 @@ app.post("/addcontact", upload.single('image'), (req,res) => {
 app.post("/addgroup", upload.single('image'), (req, res) => {
     const {name} = req.body;
     const {descrisption} = req.body;
-    
-    req.file == null ? img = "icone_group.jpeg" : img = req.file.fileName;
+    // img = req.file.filename;
+    req.file == null ? img = "icone_group.jpeg" : img = req.file.filename;
 
     res.json({name, descrisption, img})
-    let SQL = "INSERT INTO grupo (name, descrisption) VALUES ( ?, ? )";
+    let SQL = "INSERT INTO grupo (name, descrisption, img) VALUES ( ?, ?, ? )";
 
     db.run(SQL,[name, descrisption, img], (err, result) => {
         if(err) console.log(err);
@@ -197,10 +266,23 @@ app.put('/edit/:id', (req,res) => {
 })
 
 
-//Elominar un contacto
+//Eliminar un contacto
 app.delete("/delete/:id", (req, res) => {
     const {id} = req.params;
     let SQL = "DELETE FROM contato WHERE id = ?";
+    db.run(SQL, [id], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    });
+  });
+
+  //Eliminar un grupo
+app.delete("/delete-group/:id", (req, res) => {
+    const {id} = req.params;
+    let SQL = "DELETE FROM grupo WHERE id = ?";
     db.run(SQL, [id], (err, result) => {
       if (err) {
         console.log(err);

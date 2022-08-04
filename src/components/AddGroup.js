@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import Axios from "axios";
 import ButtonIconF from "./buttoms";
 import ButtonIcon from "./buttoms";
+import TextField from '@mui/material/TextField';
 import { IconCamera } from "./photo/avatar"
 
 export default function AddGroup() {
@@ -60,7 +61,7 @@ export default function AddGroup() {
         }).then((res) => {
             console.log(res)
         });
-        // navigate("/");
+        navigate("/group");
     };
    
     /*const handleClickCard = () =>{
@@ -70,8 +71,8 @@ export default function AddGroup() {
     return(
         <div className="container--form">
         <div className="btn-nav">
-            <ButtonIcon icon="arrow_back_ios" onClick={() => { navigate("/") }} />
-            <ButtonIconF icon="arrow_forward_ios" onClick={() => { navigate("/contactgroup") }} />
+            <ButtonIcon icon="arrow_back_ios" onClick={() => { navigate("/group") }} />
+            {/* <ButtonIconF icon="arrow_forward_ios" onClick={() => { navigate("/contactgroup") }} /> */}
         </div>
         <h1>AddGroup</h1>
         <form className="form--add" encType="multipart/form-data">
@@ -87,19 +88,68 @@ export default function AddGroup() {
                 name="avatar"
                 onChange={onFileChange}
             />
-            <input
+            {/* <input
                 type={"text"}
                 placeholder="Nome"
                 name="name"
                 onChange={handleChange}
-            />
+            /> */}
+            <div className="add-group-text">
+              <label>
+              <img className="photo-icon-form"
+                  src="http://localhost:3001/user1.png" 
+              />
+              </label>
+              <TextField
+                autoFocus
+                margin="dense"
+                id="name"
+                label="Nome"
+                name="name"
+                defaultValue={null}
+                onChange={handleChange}
+                type="text"
+                fullWidth
+                variant="standard"
+              />
+            </div>
+            <div className="add-group-text">
+              <label>
+              <img className="photo-icon-form"
+                  src="http://localhost:3001/user1.png" 
+              />
+              </label>
+              <TextField
+                autoFocus
+                margin="dense"
+                id="descrisption"
+                label="Descrição"
+                name="descrisption"
+                defaultValue={null}
+                onChange={handleChange}
+                type="text"
+                fullWidth
+                variant="standard"
+              />
+            </div>
+              {/* <TextField
+                margin="dense"
+                id="descrisption"
+                name="descrisption"
+                label="Descrição"
+                defaultValue={null}
+                onChange={handleChange}
+                type="text"
+                fullWidth
+                variant="standard"
+              /> */}
             {/* <label>Telefone</label> */}
-            <input
+            {/* <input
                 type={"text"}
                 placeholder="Descrição"
                 name="descrisption"
                 onChange={handleChange}
-            />
+            /> */}
             
             <ButtonIconF icon = "save" onClick={() => { handleClick() }} />
             {/*<div className="button-add">

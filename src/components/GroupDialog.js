@@ -13,10 +13,10 @@ import Avatar, {IconCamera} from "./photo/avatar"
 import { useForm } from 'react-hook-form'
 
 
-export default function FormDialog(props) {
+export default function GroupDialog(props) {
    const { register, handleSubmit, formState: { errors } } = useForm();
   // URL = `http://localhost:3001/${props.pic}`: URL = 'http://localhost:3001/user.png'
-  props.pic ?  URL = `http://localhost:3001/${props.pic}` : URL = 'http://localhost:3001/user.png' 
+  props.img ?  URL = `http://localhost:3001/${props.img}` : URL = 'http://localhost:3001/user.png' 
   const [pathImage, setPathImage] = useState(URL);
   const [fileName, setFileName] = useState("");
   const [file, setFile] = useState();
@@ -24,22 +24,7 @@ export default function FormDialog(props) {
   const [phones, setPhones] = useState([]);
   
   let navigate = useNavigate();
-  let URLs = 'http://localhost:3001/group';
 
-  useEffect(() => {
-    Axios.get(URLs)
-    .then(response =>{
-       setGrupos(response.data)
-    }).catch(error => {
-       console.log(error)
-    });
-  });
-  
-  const suppliers = grupos.map((grp) => 
-  <option 
-  value={grp.id}
-  >{grp.name}</option>
-  );
 
 
   const onFileChange = (e) => {
@@ -71,13 +56,7 @@ export default function FormDialog(props) {
       const [editValue, setEditValue] = useState({
       id: props.id,
       name: props.name,
-      phone: props.phone,
-      email: props.email,
-      adress: props.adress,
-      // pic: props.pic,
-      id_cont_social:props.id_cont_social,
-      id_contact_group: props.id_contact_group,
-      id_work:  props.id_work,
+      descrisption: props.descrisption,
    });
 
   const handleChangeValues = (values) => {
@@ -97,28 +76,10 @@ export default function FormDialog(props) {
    const formData = new FormData();
    formData.append('image', file);
    formData.append('id', props.id);
-  //  formData.append('name', editValue.name);
-  //  formData.append('phone', editValue.phone);
-  //  formData.append('email', editValue.email);
-  //  formData.append('adress', editValue.adress);
-  //  formData.append('id_cont_social', editValue.id_cont_social);
-  //  formData.append('id_contact_group', editValue.id_contact_group);
-  //  formData.append('id_work', editValue.id_work);
-      Axios.post('http://localhost:3001/edit', formData, {
+   formData.append('name', editValue.name);
+   formData.append('descrisption', editValue.descrisption);
+      Axios.post('http://localhost:3001/editgroup', formData, {
         headers: { "Content-Type": "multipart/form-data" }        
-      }).then((res) => {
-        console.log(res)
-    });
-
-    Axios.put('http://localhost:3001/edit/:id', formData, {
-        // headers: { "Content-Type": "multipart/form-data" }
-        name: editValue.name,
-        phone: editValue.phone,
-        email: editValue.email,
-        adress: editValue.adress,        
-        id_cont_social: editValue.id_cont_social,        
-        id_contact_group: editValue.id_contact_group,        
-        id_work: editValue.id_work,        
       }).then((res) => {
         console.log(res)
     });
@@ -131,8 +92,8 @@ const handleDelete = ()=>{
        `¿Estás seguro de eliminar el registro de '${props.name}'?`
    )
    if(isDelete){
-       Axios.delete(`http://localhost:3001/delete/${props.id}`)
-       navigate("/")
+       Axios.delete(`http://localhost:3001/delete-group/${props.id}`)
+       navigate("/group")
    }
 }
 // setPhones(props.phone)
@@ -146,7 +107,7 @@ const handleDelete = ()=>{
         maxWidth="sm"
       >
         <DialogTitle>
-            Editar Contato
+            Editar Informação do grupo.
          </DialogTitle>
         <DialogContent>
           <form  encType="multipart/form-data">
@@ -198,8 +159,20 @@ const handleDelete = ()=>{
                 type="text"
                 fullWidth
                 variant="standard"
+                // {...register("name", {
+                //   required: {
+                //      value: true,
+                //      message: "Campo obrigatorio!"
+                //   },
+                //   pattern: {
+                //      value: /^[a-zA-ZÀ-ÿ\s\W]{3,25}$/,
+                //      message: "O nome debe conter entre 3 e 25 carateres!"
+                //   }
+                // })}
               />
             </div>
+            {/* {errors.name && <span className="error">{errors.name.message}</span>} */}
+
             
             <div className="textFile">
               <img className="photo-icon-form"
@@ -207,111 +180,23 @@ const handleDelete = ()=>{
               />
               <TextField
                 margin="dense"
-                id="phone"
-                name="phone"
-                label="Telefone"
-                defaultValue={props.phone}
+                id="descrisption"
+                name="descrisption"
+                label="Descrição"
+                defaultValue={props.descrisption}
                 onChange={handleChangeValues}
                 type="text"
                 fullWidth
                 variant="standard"
+                // {...register("phone", {
+                //   pattern: {
+                //      value: /^[0-9]+$/,
+                //      message: "Por favor, só ingrese número"
+                //   }
+                // })}
               />
             </div>
-
-            <div className="textFile">
-              <label>
-                  <img className="photo-icon-form"
-                        src="http://localhost:3001/mail.png" 
-                  />
-               </label>
-              <TextField
-                margin="dense"
-                id="email"
-                name="email"
-                label="Email"
-                defaultValue={props.email}
-                onChange={handleChangeValues}
-                type="email"
-                fullWidth
-                variant="standard"
-              />
-            </div>
-            <div className="textFile">
-              <label>
-                <img className="photo-icon-form"
-                    src="http://localhost:3001/location.png" 
-                />
-              </label>
-              <TextField
-                margin="dense"
-                id="adress"
-                name="adress"
-                label="Endereço"
-                defaultValue={props.adress}
-                onChange={handleChangeValues}
-                type="text"
-                fullWidth
-                variant="standard"
-              />
-            </div>
-            <div className="textFile">
-                <label>
-                  <img className="photo-icon-form"
-                        src="http://localhost:3001/photo-camera.png" 
-                  />
-                </label>
-                <TextField
-                  margin="dense"
-                  id="id_cont_social"
-                  name="id_cont_social"
-                  defaultValue={props.id_cont_social}
-                  onChange={handleChangeValues}
-                  label="Redes"
-                  type="text"
-                  fullWidth
-                  variant="standard"
-                />
-            </div>
-            <div className="textFile">
-              <label>
-                <img className="photo-icon-form"
-                    src="http://localhost:3001/people.png" 
-                />
-              </label>
-              <select 
-                  name="id_contact_group" 
-                  id="id_contact_group" 
-                  // name="id_contact_group" 
-                  form="addContac" 
-                  className="select--form"
-                  defaultValue={props.id_contact_group}
-                  // options={grupos.map(g => ({label: g.name, value: g.id}))}
-                  onChange={handleChangeValues}
-                  
-               >
-                  <option>Selecione un grupo </option>
-                  {suppliers}
-                  
-               </select>
-            </div>
-            <div className="textFile">
-              <label>
-                <img className="photo-icon-form"
-                    src="http://localhost:3001/suitcase.png" 
-                />
-              </label>
-              <TextField
-                margin="dense"
-                id="id_work"
-                name="id_work"
-                label="Trabalho"
-                defaultValue={props.id_work}
-                onChange={handleChangeValues}
-                type="text"
-                fullWidth
-                variant="standard"
-              />
-            </div>
+            {/* {errors.phone && <span className="error">{errors.phone.message}</span>} */}            
           </form>
         </DialogContent>
         <DialogActions>

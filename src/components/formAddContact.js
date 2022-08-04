@@ -15,7 +15,7 @@ export default function FormAddContact (props) {
       props.setOpen(false);
    };
 
-   const [values, setValues] = useState('');
+   const [values, setValues] = useState([]);
     const [phones, setPhones] = useState([]);
     const [file, setFile] = useState(null);
     const [fileName, setFileName] = useState("");
@@ -58,28 +58,59 @@ export default function FormAddContact (props) {
             setFileName(files);
             console.log('file: '+ file);
         }else {
-            console.log("there was an error")
+            console.log("there was an error");
         }
     }
 
-    const handleClick = async (e) => {
-        const formData = new FormData();
-        formData.append('image', file);
-        formData.append('name', values.name);
-        formData.append('phone', phones);
-        formData.append('email', values.email);
-        formData.append('adress', values.adress);
-        formData.append('id_cont_social', values.id_cont_social);
-        formData.append('id_contact_group', values.id_contact_group);
-        formData.append('id_work', values.id_work);
-        await Axios.post("http://localhost:3001/addcontact", formData, {
-            headers: { "Content-Type": "multipart/form-data" }
-        }).then((res) => {
-            console.log(res)
-        });
-        navigate("/");
-        handleClose();
-    };
+   //  const handleClick = async (e) => {
+   //      const formData = new FormData();
+   //      formData.append('image', file);
+   //      formData.append('name', values.name);
+   //      formData.append('phone', values.phone);
+   //      formData.append('email', values.email);
+   //      formData.append('adress', values.adress);
+   //      formData.append('id_cont_social', values.id_cont_social);
+   //      formData.append('id_contact_group', values.id_contact_group);
+   //      formData.append('id_work', values.id_work);
+   //      await Axios.post("http://localhost:3001/addcontact", formData, {
+   //          headers: { "Content-Type": "multipart/form-data" }
+   //      }).then((res) => {
+   //          console.log(res)
+   //      });
+   //      navigate("/");
+   //      handleClose();
+   //  };
+
+
+   const handleClick = async (e) => {
+
+      await Axios.post("http://localhost:3001/addcontact",{
+         name: values.name,
+         phone: values.phone,
+         email: values.email,
+         adress: values.adress,
+      }).then((res) => {
+          console.log(res)
+      });
+
+      const formData = new FormData();
+      formData.append('image', file);
+      await Axios.post("http://localhost:3001/add-pic-contact", formData, {
+          headers: { "Content-Type": "multipart/form-data" }
+      }).then((res) => {
+          console.log(res)
+      });
+
+      
+      navigate("/");
+      handleClose();
+  };
+
+
+
+
+
+
     const handleAddPhone = (e) => {
         e.preventDefault();
         console.log("activado!");
@@ -97,7 +128,7 @@ export default function FormAddContact (props) {
     }
    //  {typeof grupos !== "undefined" && 
     const suppliers = grupos.map((grp) => 
-      <option value={grp.id}>{grp.name}</option>
+      <option key={grp.id} value={grp.id}>{grp.name}</option>
       )
 
 
@@ -163,42 +194,21 @@ export default function FormAddContact (props) {
               />
             </div>
 
-            <div className="list--phone"> 
-               <div className="container--phone">
-                  {phones.map((phone, index) => (
-                     <div key={index} className="phone--input" >
-                        <img className="photo-icon-form"
-                              src="http://localhost:3001/telephone.png" 
-                        />
-                        <TextField 
-                           margin="dense"
-                           label={`Telefone ${index+1}`}
-                           fullWidth
-                           variant="standard"
-                           id={`phone-${index+1}`}
-                           type={"text"}
-                           placeholder={`Telefone ${index + 1}`}
-                           name="phone"
-                           value={phone}
-                           onChange={(e) => handleChangePhone(e, index)}
-                        />
-                        <ButtonIcon
-                           icon ="highlight_off"
-                           onClick = {(e) => handleRemovePhone(e, index)}
-                        />
-                     </div>
-
-                        ))}
-                  </div>
-               <div className="btn-add-phone">
-                  <hr />
-                  <ButtonIcon
-                     className="addPhone"
-                     icon="add_ic_call"
-                     onClick={handleAddPhone}
-                  />
-                  <p> Adicionar número de telefone</p>
-               </div>
+            <div className="textFile">
+              <img className="photo-icon-form"
+                  src="http://localhost:3001/telephone.png" 
+              />
+              <TextField
+                margin="dense"
+                id="phone"
+                name="phone"
+                label="Telefone"
+                defaultValue={null}
+                onChange={handleChange}
+                type="text"
+                fullWidth
+                variant="standard"
+              />
             </div>
 
             <div className="textFile">

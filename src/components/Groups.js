@@ -2,14 +2,14 @@ import Axios from "axios"
 import React, { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import ButtonIcon from "./buttoms";
-import ContactGroup from "./ContactGroup.js";
+import GrupoCard from "./contact";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { PropaneSharp } from "@mui/icons-material";
 import FormAddContact from "./formAddContact";
 
 
 
-export default function HomeGroup() { 
+export default function Groups() { 
     const [open, setOpen] = useState(false);
     const [contato, setContact] = useState([]);
     const URL = "http://localhost:3001/group";
@@ -68,7 +68,7 @@ export default function HomeGroup() {
     
     return (
         <div className="home">
-            <h1> Lista de Contatos</h1>
+            <h1> Lista de Gupos</h1>
             <div className="bar-principal">
                 <div className="containerInput">
                     {/*<form onSubmit = {SearchContact}>*/}
@@ -76,7 +76,7 @@ export default function HomeGroup() {
                         <input
                             className="form-control inputPesquisar"
                             type={"text"}
-                            placeholder = "Pesquise um contato..."
+                            placeholder = "Pesquise um grupo..."
                             //name = "name"
                             value={pesquisar}
                             onChange = {handleChange}
@@ -97,16 +97,15 @@ export default function HomeGroup() {
                 setOpen={setOpen}
             />
             <div className="lista--contact">
-                {typeof contato !== "undefined" && contato.map((contactgroup) => {
+                {typeof contato !== "undefined" && contato.map((contact) => {
                     return (
-                        <Link key={contactgroup.id} to={`/contactgroup/${contactgroup.id}`} >
-                            <ContactGroup
-                                key={contactgroup.id}
-                                name={contactgroup.name}
-                                descrisption={contactgroup.descrisption}
-                                pic={contactgroup.pic}
-                                // className={(contact.id) %2 ?'--n':'--p'}
-                            />
+                        <Link key={contact.id} to={`/editgroup/${contact.id}`} >
+                            <GrupoCard
+                                key={contact.id}
+                                name={contact.name}
+                                descrisption={contact.descrisption}
+                                img={contact.img}
+                            ></GrupoCard>
                         </Link>
                     )
                 })}

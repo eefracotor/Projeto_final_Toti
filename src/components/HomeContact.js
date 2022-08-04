@@ -2,17 +2,17 @@ import Axios from "axios"
 import React, { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import ButtonIcon from "./buttoms";
-import ContactGroup from "./ContactGroup.js";
+import Contacto from "./contact";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { PropaneSharp } from "@mui/icons-material";
 import FormAddContact from "./formAddContact";
 
 
 
-export default function HomeGroup() { 
+export default function HomeContact() { 
     const [open, setOpen] = useState(false);
     const [contato, setContact] = useState([]);
-    const URL = "http://localhost:3001/group";
+    const URL = "http://localhost:3001/list";
     const [formContacts, setFormContacts] = useState([]); 
     const [pesquisar, setPesquisar] = useState("");
     
@@ -97,16 +97,17 @@ export default function HomeGroup() {
                 setOpen={setOpen}
             />
             <div className="lista--contact">
-                {typeof contato !== "undefined" && contato.map((contactgroup) => {
+                {typeof contato !== "undefined" && contato.map((contact) => {
                     return (
-                        <Link key={contactgroup.id} to={`/contactgroup/${contactgroup.id}`} >
-                            <ContactGroup
-                                key={contactgroup.id}
-                                name={contactgroup.name}
-                                descrisption={contactgroup.descrisption}
-                                pic={contactgroup.pic}
+                        <Link key={contact.id} to={`/contact/${contact.id}`} >
+                            <Contacto
+                                key={contact.id}
+                                name={contact.name}
+                                phone={contact.phone}
+                                email={contact.email}
+                                pic={contact.pic}
                                 // className={(contact.id) %2 ?'--n':'--p'}
-                            />
+                            ></Contacto>
                         </Link>
                     )
                 })}

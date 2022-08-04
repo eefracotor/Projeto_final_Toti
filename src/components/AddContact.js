@@ -6,7 +6,7 @@ import { IconCamera } from "./photo/avatar";
 import FormDialog from "./Dialog";
 import { TextField, Icon } from "@mui/material";
 // import Icon from "react-icon";
-// import { useForm } from "../components/TESTE/useForm";
+import { useForm } from "../components/TESTE/useForm";
 
 const initialForm = {
     name: "",

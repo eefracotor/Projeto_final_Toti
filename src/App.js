@@ -9,6 +9,8 @@ import AddGroup from "./components/AddGroup";
 import EditGroup from "./components/EditGroup";
 import ContactGroup from "./components/ContactGroup";
 import AddContactGroup from "./components/AddContactGroup";
+import Groups from "./components/Groups";
+import HomeContact from "./components/HomeContact";
 //import TesteForm from "./components/TESTE/resnderTest";
 
 function App() {
@@ -17,11 +19,13 @@ function App() {
       <Router>
         <Routes>
           <Route exact path ="/" element = {<Home />} />
+          <Route path ="/contact" element = {<HomeContact />} />
           <Route path ="/search" element = {<Search />} />
           <Route path ='/addcontact' element = {<AddContact />} />
           <Route path ='/contact/:id' element = {<EditContact />} />
+          <Route path ='/group' element = {<Groups />} />
           <Route path ="/addgroup" element = {<AddGroup />} />
-          <Route path ="/editgroup" element = {<EditGroup />} />
+          <Route path ="/editgroup/:id" element = {<EditGroup />} />
           <Route path ="/contactgroup" element = {<ContactGroup />} />
           <Route path ="/addcontactgroup" element = {<AddContactGroup />} />
           {/*<Route path ="/teste" element = {<TesteForm />} />*/} 
