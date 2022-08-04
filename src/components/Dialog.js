@@ -14,7 +14,7 @@ import { useForm } from 'react-hook-form'
 
 
 export default function FormDialog(props) {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+   const { register, handleSubmit, formState: { errors } } = useForm();
   // URL = `http://localhost:3001/${props.pic}`: URL = 'http://localhost:3001/user.png'
   props.pic ?  URL = `http://localhost:3001/${props.pic}` : URL = 'http://localhost:3001/user.png' 
   const [pathImage, setPathImage] = useState(URL);

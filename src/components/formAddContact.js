@@ -202,7 +202,7 @@ export default function FormAddContact (props) {
             </div>
 
             <div className="textFile">
-            <  label>
+               <label>
                   <img className="photo-icon-form"
                         src="http://localhost:3001/mail.png" 
                   />
